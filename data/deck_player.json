@@ -13,13 +13,13 @@
     { "name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix" },
     { "name": "Deflect Field",  "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field" },
     { "name": "Deflect Field",  "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field" },
-    { "name": "Repair Drone",   "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "repair_drone" },
-    { "name": "Repair Drone",   "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "repair_drone" },
-    { "name": "Nano Heal",      "damage": 0, "shield": 0, "heal": 1, "energy": 0, "image": "nano_heal" },
+    { "name": "Swift Strike",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike" },
+    { "name": "Power Slash",    "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash" },
+    { "name": "Energy Wave",    "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "energy_wave" },
     { "name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade" },
     { "name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade" },
-    { "name": "Strike & Mend",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "strike_and_mend" },
-    { "name": "Strike & Mend",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "strike_and_mend" },
-    { "name": "Shield Pulse",   "damage": 0, "shield": 2, "heal": 1, "energy": 2, "image": "shield_pulse" }
+    { "name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike" },
+    { "name": "Momentum Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "momentum_slash" },
+    { "name": "Fortify",        "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify" }
   ]
 }
