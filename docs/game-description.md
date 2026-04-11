@@ -12,6 +12,7 @@ La plancia di gioco è divisa in in cinque sezioni. Partendo dall'alto:
 - Sezione Mano del giocatore -> Carte pescate dal giocatore (max 5), con mazzo a fianco e cimitero. Ciascuna carta ha un nome, un'immagine e un effetto specifico. Passando sopra col mouse, compare una casella che mostra la descrizione della carta e l'effetto.
 - Sezione Giocatore -> Nome, HP Rimanenti, Energia rimanente, Tasto fine turno
 
+```text
  ________________________________________
 | Immagine        Nome Nemico Energia: 5 |
 |  ________________ _ _ _ _ _            |
@@ -42,6 +43,7 @@ La plancia di gioco è divisa in in cinque sezioni. Partendo dall'alto:
 | Energia: 5              | fine turno | |
 |                         |____________| |
 |________________________________________|
+```
 
 
 ## CARTE
@@ -62,6 +64,7 @@ Tutte le carte **possono** avere 1 o 2 effetti. Le possibili combinazioni sono:
 Le carte DEVONO avere una sezione superiore con l'immagine della carta e una inferiore con l'elenco degli effetti.
 
 Alcuni esempi
+```text
  _________________
 |  _____________  |
 | |             | |
@@ -95,7 +98,7 @@ Alcuni esempi
 |            ENE:2|
 |_________________|
 
-
+```
 _______________
 
 ## REGOLE TURNO
