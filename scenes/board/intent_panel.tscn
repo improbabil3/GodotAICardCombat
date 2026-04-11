@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://intent_panel"]
+
+[ext_resource type="Script" path="res://scripts/ui/intent_panel_ui.gd" id="1_intent"]
+
+[node name="IntentPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 110)
+size_flags_horizontal = 3
+script = ExtResource("1_intent")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = -8.0
+
+[node name="EnemyIntentsLabel" type="Label" parent="HBox"]
+layout_mode = 2
+text = "◀ Intento Nemico"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1, 0.6, 0.6, 1)
+size_flags_horizontal = 0
+
+[node name="EnemyIntents" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DamageLabel" type="Label" parent="HBox/EnemyIntents"]
+layout_mode = 2
+text = "⚔ DAN: 0"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+
+[node name="ShieldLabel" type="Label" parent="HBox/EnemyIntents"]
+layout_mode = 2
+text = "🛡 SCU: 0"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.35, 0.6, 1, 1)
+
+[node name="HealLabel" type="Label" parent="HBox/EnemyIntents"]
+layout_mode = 2
+text = "💚 GUA: 0"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.35, 1, 0.45, 1)
+
+[node name="Separator" type="VSeparator" parent="HBox"]
+layout_mode = 2
+
+[node name="PlayerIntents" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DamageLabel" type="Label" parent="HBox/PlayerIntents"]
+layout_mode = 2
+text = "⚔ DAN: 0"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+
+[node name="ShieldLabel" type="Label" parent="HBox/PlayerIntents"]
+layout_mode = 2
+text = "🛡 SCU: 0"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.35, 0.6, 1, 1)
+
+[node name="HealLabel" type="Label" parent="HBox/PlayerIntents"]
+layout_mode = 2
+text = "💚 GUA: 0"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.35, 1, 0.45, 1)
+
+[node name="PlayerIntentsLabel" type="Label" parent="HBox"]
+layout_mode = 2
+text = "Intento Giocatore ▶"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 1)
+size_flags_horizontal = 0

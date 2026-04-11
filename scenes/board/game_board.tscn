@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://game_board"]
+
+[ext_resource type="PackedScene" path="res://scenes/board/actor_panel.tscn" id="1_actor_panel"]
+[ext_resource type="PackedScene" path="res://scenes/board/hand_area.tscn" id="2_hand_area"]
+[ext_resource type="PackedScene" path="res://scenes/board/intent_panel.tscn" id="3_intent_panel"]
+[ext_resource type="Script" path="res://scripts/screens/game_screen.gd" id="4_game_screen"]
+
+[node name="GameBoard" type="VBoxContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 4
+script = ExtResource("4_game_screen")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.06, 0.12, 1)
+mouse_filter = 2
+
+[node name="TurnLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Turno 1"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.5, 0.6, 0.8, 0.8)
+
+[node name="EnemyPanel" type="Node2D" parent="."]
+layout_mode = 2
+
+[node name="ActorPanel" type="Node2D" parent="EnemyPanel"]
+
+[node name="EnemyPanel_instance" parent="." instance=ExtResource("1_actor_panel")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EnemyHandArea" parent="." instance=ExtResource("2_hand_area")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IntentPanel" parent="." instance=ExtResource("3_intent_panel")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerHandArea" parent="." instance=ExtResource("2_hand_area")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerPanel_instance" parent="." instance=ExtResource("1_actor_panel")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardTooltip" type="PanelContainer" parent="."]
+visible = false
+z_index = 100
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 0
+
+[node name="TooltipVBox" type="VBoxContainer" parent="CardTooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 4
+
+[node name="TooltipName" type="Label" parent="CardTooltip/TooltipVBox"]
+layout_mode = 2
+text = "Card Name"
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="TooltipEffects" type="Label" parent="CardTooltip/TooltipVBox"]
+layout_mode = 2
+text = "Effects"
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="TooltipEnergy" type="Label" parent="CardTooltip/TooltipVBox"]
+layout_mode = 2
+text = "ENE: 0"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)

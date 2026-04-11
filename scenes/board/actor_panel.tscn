@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://actor_panel"]
+
+[ext_resource type="Script" path="res://scripts/ui/actor_panel_ui.gd" id="1_actor_panel"]
+
+[node name="ActorPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 90)
+size_flags_horizontal = 3
+script = ExtResource("1_actor_panel")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 12
+
+[node name="Portrait" type="TextureRect" parent="HBox"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="InfoBox" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NameLabel" type="Label" parent="HBox/InfoBox"]
+layout_mode = 2
+text = "Actor Name"
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+
+[node name="HPBar" type="ProgressBar" parent="HBox/InfoBox"]
+custom_minimum_size = Vector2(200, 22)
+layout_mode = 2
+max_value = 20.0
+value = 20.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="HBox/InfoBox/HPBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "20 / 20"
+horizontal_alignment = 0
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+mouse_filter = 2
+
+[node name="EnergyLabel" type="Label" parent="HBox/InfoBox"]
+layout_mode = 2
+text = "⚡ Energia: 5 / 5"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+
+[node name="EndTurnButton" type="Button" parent="HBox/InfoBox"]
+layout_mode = 2
+text = "Fine Turno ▶"
+custom_minimum_size = Vector2(120, 36)
+visible = false
+theme_override_font_sizes/font_size = 14

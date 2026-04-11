@@ -1,0 +1,25 @@
+{
+  "deck_name": "Omega Pilot Deck",
+  "cards": [
+    { "name": "Laser Burst",    "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst" },
+    { "name": "Laser Burst",    "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst" },
+    { "name": "Plasma Cannon",  "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon" },
+    { "name": "Plasma Cannon",  "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon" },
+    { "name": "Ion Strike",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "ion_strike" },
+    { "name": "Ion Strike",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "ion_strike" },
+    { "name": "Nano Shield",    "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield" },
+    { "name": "Nano Shield",    "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield" },
+    { "name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix" },
+    { "name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix" },
+    { "name": "Deflect Field",  "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field" },
+    { "name": "Deflect Field",  "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field" },
+    { "name": "Repair Drone",   "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "repair_drone" },
+    { "name": "Repair Drone",   "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "repair_drone" },
+    { "name": "Nano Heal",      "damage": 0, "shield": 0, "heal": 1, "energy": 0, "image": "nano_heal" },
+    { "name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade" },
+    { "name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade" },
+    { "name": "Strike & Mend",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "strike_and_mend" },
+    { "name": "Strike & Mend",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "strike_and_mend" },
+    { "name": "Shield Pulse",   "damage": 0, "shield": 2, "heal": 1, "energy": 2, "image": "shield_pulse" }
+  ]
+}

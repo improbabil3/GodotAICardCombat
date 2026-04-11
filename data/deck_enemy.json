@@ -1,0 +1,25 @@
+{
+  "deck_name": "Nexus Warlord Deck",
+  "cards": [
+    { "name": "Void Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash" },
+    { "name": "Void Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash" },
+    { "name": "Dark Matter",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "dark_matter" },
+    { "name": "Dark Matter",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "dark_matter" },
+    { "name": "Pulse Bolt",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "pulse_bolt" },
+    { "name": "Pulse Bolt",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "pulse_bolt" },
+    { "name": "Null Barrier",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "null_barrier" },
+    { "name": "Null Barrier",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "null_barrier" },
+    { "name": "Iron Aegis",     "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "iron_aegis" },
+    { "name": "Iron Aegis",     "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "iron_aegis" },
+    { "name": "Shadow Guard",   "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "shadow_guard" },
+    { "name": "Shadow Guard",   "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "shadow_guard" },
+    { "name": "Entropy Drain",  "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "entropy_drain" },
+    { "name": "Entropy Drain",  "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "entropy_drain" },
+    { "name": "Void Mend",      "damage": 0, "shield": 0, "heal": 1, "energy": 0, "image": "void_mend" },
+    { "name": "Phase Strike",   "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "phase_strike" },
+    { "name": "Phase Strike",   "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "phase_strike" },
+    { "name": "Rend & Restore", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "rend_and_restore" },
+    { "name": "Rend & Restore", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "rend_and_restore" },
+    { "name": "Void Aegis",     "damage": 0, "shield": 2, "heal": 1, "energy": 2, "image": "void_aegis" }
+  ]
+}

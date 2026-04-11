@@ -1,0 +1,16 @@
+* text=auto
+
+# Prefer union merges for Godot scene/resource text formats
+*.tscn merge=union
+*.tres merge=union
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ogg binary
+*.wav binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.pck binary
