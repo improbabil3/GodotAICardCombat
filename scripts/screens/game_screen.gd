@@ -74,13 +74,23 @@ func _start_game() -> void:
 # ── Setup ────────────────────────────────────────────────────────────────────
 
 func _setup_actors() -> void:
-	_player = ActorData.new("Omega Pilot",    Config.player_max_hp, Config.player_max_energy)
+	# Usa il personaggio selezionato dal GameManager
+	var player_name := "Omega Pilot"
+	if GameManager.selected_character != null:
+		player_name = GameManager.selected_character.name
+	
+	_player = ActorData.new(player_name, Config.player_max_hp, Config.player_max_energy)
 	_enemy  = ActorData.new("Nexus Warlord",  Config.enemy_max_hp,  Config.enemy_max_energy)
 
-	var player_cards := DeckLoader.load_deck("res://data/deck_player.json")
-	var enemy_cards  := DeckLoader.load_deck("res://data/deck_enemy.json")
-
-	DeckManager.shuffle_deck(player_cards)
+	# Usa il mazzo scelto dal player se disponibile, altrimenti carica dal default
+	var player_cards: Array[CardData]
+	if GameManager.player_deck.size() > 0:
+		player_cards = GameManager.player_deck.duplicate()
+	else:
+		player_cards = DeckLoader.load_deck("res://data/deck_player.json")
+		DeckManager.shuffle_deck(player_cards)
+	
+	var enemy_cards := DeckLoader.load_deck("res://data/deck_enemy.json")
 	DeckManager.shuffle_deck(enemy_cards)
 
 	_player.deck = player_cards

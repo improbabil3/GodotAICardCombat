@@ -1,0 +1,25 @@
+{
+	"deck_name": "Apex Striker Specific",
+	"cards": [
+		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
+		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
+		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
+		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
+		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
+		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
+		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
+		{"name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade"},
+		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
+		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
+		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
+		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
+		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
+		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
+		{"name": "Momentum Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "momentum_slash"},
+		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
+		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
+		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
+		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
+		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"}
+	]
+}

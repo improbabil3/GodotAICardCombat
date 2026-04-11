@@ -11,7 +11,7 @@ func _ready() -> void:
 	$CenterContainer/VBox/MenuButton.pressed.connect(_on_menu)
 
 func _on_play_again() -> void:
-	GameManager.start_game()
+	GameManager.start_character_selection()
 
 func _on_menu() -> void:
 	GameManager.return_to_menu()

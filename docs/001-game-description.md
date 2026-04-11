@@ -17,24 +17,24 @@ La plancia di gioco è divisa in in cinque sezioni. Partendo dall'alto:
 | Immagine        Nome Nemico Energia: 5 |
 |  ________________ _ _ _ _ _            |
 | |______________/_ _ _ _ _ _| HP: X/20  |
-|                    ___                 |
-|    Mazzo ->       |   |                |
-|                   |___|                |
-|  ___   ___   ___   ___   ___      ___  |
-| |   | |   | |   | |   | |   |    |   | | <- Cimitero
-| |___| |___| |___| |___| |___|    |___| |
+|  ___                 				___	 |
+| |   |	 <- Mazzo				   |   | | <- Cimitero
+| |___|               			   |___| |
+|      ___   ___   ___   ___   ___       |
+|     |   | |   | |   | |   | |   |    	 | <- Mano nemica
+|     |___| |___| |___| |___| |___| 	 | <- Le carte di default non sono visibili
 |                                        |
 | Intento Nemico        Intento Giocatore|
 |  DAN + Y              DAN + N          |
 |  SCU + Z              SCU + M          |
 |  GUA + W              GUA + L          |
 |                                        |
-|  ___   ___   ___   ___   ___      ___  |
-| | X | | X | | X | | X | | X |    | X | | <- Cimitero
-| |___| |___| |___| |___| |___|    |___| | <- Le carte con "X" sono visibili
-|                    ___                 |
-|    Mazzo ->       |   |                |
-|                   |___|                |
+|      ___   ___   ___   ___   ___       |
+|     | X | | X | | X | | X | | X |    	 | <- Mano giocatore
+|     |___| |___| |___| |___| |___| 	 | <- Le carte con "X" sono visibili
+|  ___                 				___	 |
+| |   |	 <- Mazzo				   | X | | <- Cimitero (carte visibili)
+| |___|               			   |___| |
 |  ___   ___   ___   ___   ___      ___  |
 |  __________________ _ _ _ _            |
 | |_________________/_ _ _ _ | HP: Y/20  |

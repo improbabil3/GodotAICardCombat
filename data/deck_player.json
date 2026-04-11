@@ -160,14 +160,6 @@
 			"heal": 0,
 			"energy": 1,
 			"image": "fortify"
-		},
-		{
-			"name": "Heal Ray",
-			"damage": 0,
-			"shield": 0,
-			"heal": 3,
-			"energy": 1,
-			"image": "heal_ray"
 		}
 	]
 }

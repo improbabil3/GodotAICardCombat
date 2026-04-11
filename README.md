@@ -71,7 +71,35 @@ Gioco di carte a turni sci-fi realizzato in **Godot 4.7 / GDScript**.
 
 1. Aprire **Godot Engine**
 2. **Import** → Selezionare questa cartella (`GodotPlayTest/`)
-3. Premere **Run** (F5) o **Play Selected Scene** su `scenes/screens/title_screen.tscn`
+3. Premere **Run** (F5) sia **Play Selected Scene** su `scenes/screens/title_screen.tscn`
+
+Il flow di gioco:
+- **Title Screen** → Pulsante "Gioca" → **Character Selection Screen** (carousel 3 personaggi)
+- Selezionare personaggio → **Card Selection Screen** (scegli 10 di 20 carte specifiche)
+- Conferma mazzo → **Game Screen** (combattimento)
+- Vittoria/Sconfitta → Ritorna a Character Selection
+
+---
+
+## Nuovi Personaggi (Multi-Character System)
+
+Nel gioco ora sono disponibili **3 personaggi giocabili**, ciascuno con un **pool di 20 carte specifiche** da cui il giocatore seleziona 10. Le restanti 10 carte del mazzo di combattimento vengono scelte casualmente dal *base deck* generico.
+
+### Personaggi
+
+| Personaggio | File Specifiche | Strategia | Descrizione |
+|-------------|-----------------|-----------|-------------|
+| **Omega Pilot** | `data/deck_omega_pilot_specific.json` | Equilibrato | Pilota potenziato con attacchi e difesa moderati |
+| **Phoenix Guardian** | `data/deck_phoenix_guardian_specific.json` | Difesa/Guarigione | Paladino specializzato in scudi e cura |
+| **Apex Striker** | `data/deck_apex_striker_specific.json` | Aggressivo | Guerriero con focus su attacchi potenti |
+
+### Deck Structure
+
+Ogni personaggio ha:
+- **20 carte specifiche** (in `data/deck_*_specific.json`)
+- Il giocatore **sceglie 10** dalla griglia di selezione
+- Sistema aggiunge automaticamente **10 carte casuali dal base deck** (`data/deck_player.json`)
+- **Total: 20 carte** per il combattimento
 
 ---
 
@@ -80,32 +108,39 @@ Gioco di carte a turni sci-fi realizzato in **Godot 4.7 / GDScript**.
 ```
 GodotPlayTest/
 ├── assets/
-│   └── icon.svg                   # Icona del progetto
+│   └── icon.svg                           # Icona del progetto
 ├── data/
-│   ├── deck_player.json           # Mazzo Omega Pilot (20 carte)
-│   └── deck_enemy.json            # Mazzo Nexus Warlord (20 carte)
+│   ├── deck_player.json                   # Mazzo base generico (20 carte)
+│   ├── deck_enemy.json                    # Mazzo nemico (20 carte)
+│   ├── deck_omega_pilot_specific.json     # Pool 20 carte Omega Pilot
+│   ├── deck_phoenix_guardian_specific.json # Pool 20 carte Phoenix Guardian
+│   └── deck_apex_striker_specific.json    # Pool 20 carte Apex Striker
 ├── scenes/
 │   ├── board/
-│   │   ├── game_board.tscn        # Layout principale del campo di battaglia
-│   │   ├── actor_panel.tscn       # Pannello HP/energia attore
-│   │   ├── hand_area.tscn         # Area mazzo + mano + cimitero
-│   │   └── intent_panel.tscn      # Pannello intenti accumulati
+│   │   ├── game_board.tscn                # Layout campo di battaglia
+│   │   ├── actor_panel.tscn               # Pannello HP/energia attore
+│   │   ├── hand_area.tscn                 # Area mazzo + mano + cimitero
+│   │   └── intent_panel.tscn              # Pannello intenti accumulate
 │   ├── card/
-│   │   └── card.tscn              # Card UI con texture procedurale
+│   │   └── card.tscn                      # Card UI con texture procedurale
 │   └── screens/
-│       ├── title_screen.tscn      # Menu principale
-│       ├── game_screen.tscn       # Wrapper battaglia (istanza game_board)
-│       ├── victory_screen.tscn    # Schermata vittoria
-│       └── defeat_screen.tscn     # Schermata sconfitta
+│       ├── title_screen.tscn              # Menu principale
+│       ├── character_selection_screen.tscn # Selezione personaggio (carousel)
+│       ├── card_selection_screen.tscn     # Selezione 10 di 20 carte carattere
+│       ├── game_screen.tscn               # Wrapper battaglia (istanza game_board)
+│       ├── victory_screen.tscn            # Schermata vittoria
+│       └── defeat_screen.tscn             # Schermata sconfitta
 └── scripts/
     ├── autoload/
     │   ├── config.gd              # Feature flags (show_enemy_hand, animate_enemy_turn…)
     │   ├── debug_logger.gd        # Log colorati via print_rich()
     │   └── game_manager.gd        # Singleton globale: stato partita + transizioni
     ├── data/
-    │   ├── card_data.gd           # Resource: card_name, damage, shield, heal, energy_cost
-    │   ├── actor_data.gd          # RefCounted: hp, hand[], deck[], intents
-    │   └── deck_loader.gd         # Loader + validatore JSON (esattamente 20 carte)
+    │   ├── card_data.gd                # Resource: card_name, damage, shield, heal, energy_cost
+    │   ├── actor_data.gd               # RefCounted: hp, hand[], deck[], intents
+    │   ├── character_data.gd           # RefCounted: nome, descrizione, specific_cards[] (20 carte)
+    │   ├── deck_loader.gd              # Loader + validatore JSON (esattamente 20 carte)
+    │   └── character_manager.gd        # Static: gestisce 3 personaggi + selezione attuale
     ├── systems/
     │   ├── deck_manager.gd        # draw_cards, discard, shuffle (Fisher-Yates)
     │   ├── combat_resolver.gd     # Fase heal → attacco player → attacco enemy
@@ -197,3 +232,23 @@ I mazzi si trovano in `data/`. Ogni mazzo deve avere **esattamente 20 carte**.
 **Disabilitare animazioni**: impostare `Config.animation_speed = 0.0` in `config.gd`
 
 **Mostrare/nascondere mano nemico**: impostare `Config.show_enemy_hand = false` in `config.gd`
+
+---
+
+## Documentazione Tecnica & Lesson Learned
+
+Consultare i documenti di approfondimento per capire le decisioni architetturali e evitare errori comuni:
+
+- **[`docs/001-game-description.md`](docs/001-game-description.md)** — descrizione meccaniche di gioco
+- **[`docs/002-multiple-characters.md`](docs/002-multiple-characters.md)** — design del sistema multi-personaggio
+- **[`docs/003-godot-layout-responsive.md`](docs/003-godot-layout-responsive.md)** — layout responsive in Godot 4.7 — **lezioni apprese**, errori comuni e best practices per container, anchor e dynamic sizing
+
+---
+
+## Contributing
+
+Se contribuisci, leggi attentamente:
+1. [`.github/instructions/codebase.instructions.md`](.github/instructions/codebase.instructions.md) — architettura e convenzioni di codice
+2. [`.github/instructions/voices.instructions.md`](.github/instructions/voices.instructions.md) — tone e feedback critico
+3. Rispettare la struttura a 5 layer (Data / Systems / Autoloads / Screens / UI)
+4. Non mescolare logica di dati con nodi di scena

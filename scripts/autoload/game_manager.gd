@@ -11,22 +11,42 @@ extends Node
 var player: ActorData = null
 var enemy: ActorData = null
 
+## Personaggio selezionato dal giocatore
+var selected_character: CharacterData = null
+
+## Mazzo finale del player (dopo selezione carte)
+var player_deck: Array[CardData] = []
+
 ## Statistiche partita corrente
 var turns_played: int = 0
 var _combat_won: bool = false
 
 ## Scene registrate
-const SCENE_TITLE   := "res://scenes/screens/title_screen.tscn"
-const SCENE_GAME    := "res://scenes/screens/game_screen.tscn"
-const SCENE_VICTORY := "res://scenes/screens/victory_screen.tscn"
-const SCENE_DEFEAT  := "res://scenes/screens/defeat_screen.tscn"
+const SCENE_TITLE       := "res://scenes/screens/title_screen.tscn"
+const SCENE_CHARACTER   := "res://scenes/screens/character_selection_screen.tscn"
+const SCENE_CARD        := "res://scenes/screens/card_selection_screen.tscn"
+const SCENE_GAME        := "res://scenes/screens/game_screen.tscn"
+const SCENE_VICTORY     := "res://scenes/screens/victory_screen.tscn"
+const SCENE_DEFEAT      := "res://scenes/screens/defeat_screen.tscn"
 
 func _ready() -> void:
 	DebugLogger.log_system("GameManager: avviato")
 	# Applica tema sci-fi all'intera app (si propaga a tutti i nodi Control)
 	get_tree().root.theme = ThemeBuilder.build()
+	# Inizializza il CharacterManager
+	CharacterManager.init()
 
-## Avvia una nuova partita
+## Mostra la schermata di selezione personaggio
+func start_character_selection() -> void:
+	DebugLogger.log_system("GameManager: inizio selezione personaggio")
+	_change_scene(SCENE_CHARACTER)
+
+## Mostra la schermata di selezione carte
+func start_card_selection() -> void:
+	DebugLogger.log_system("GameManager: inizio selezione carte")
+	_change_scene(SCENE_CARD)
+
+## Avvia una nuova partita (dopo che il personaggio e mazzo sono stati scelti)
 func start_game() -> void:
 	turns_played = 0
 	DebugLogger.log_turn("GameManager: avvio nuova partita")
@@ -47,6 +67,8 @@ func end_game(player_won: bool) -> void:
 func return_to_menu() -> void:
 	player = null
 	enemy = null
+	selected_character = null
+	player_deck.clear()
 	turns_played = 0
 	DebugLogger.log_system("GameManager: ritorno al menu principale")
 	_change_scene(SCENE_TITLE)
