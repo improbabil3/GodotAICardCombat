@@ -169,3 +169,4 @@ Generare le carte in maniera casuale, con efftti e costi.
 Animazione di pescata della carta, mix del mazzo, giocata della carta e scarto della carta verso il cimitero.
 Immagini di base per identificare il personaggio, le carte etc.
 Tutto quello che serve per farlo funzionare.
+
