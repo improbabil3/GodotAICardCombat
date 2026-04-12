@@ -1,6 +1,6 @@
 from __future__ import annotations
 import statistics
-from ..sim.game import GameResult
+from ..sim.game import GameResult, RunResult
 
 # ── Balance KPI thresholds ─────────────────────────────────────────────────
 KPI_AVG_TURNS_MAX = 20
@@ -137,3 +137,56 @@ def print_balance_recommendations(results: list[GameResult]) -> None:
         print("    This is the main reported symptom. The healing/shield economy is the cause.")
 
     print()
+
+
+# ── Run-level report ──────────────────────────────────────────────────────
+
+def generate_run_report(results: list[RunResult]) -> dict:
+    """Compute aggregated statistics from a list of RunResult objects."""
+    n = len(results)
+    if n == 0:
+        raise ValueError("results is empty")
+
+    completed = sum(1 for r in results if r.defeated_at < 0)
+    defeated  = n - completed
+
+    rating_counts: dict[str, int] = {}
+    for r in results:
+        rating_counts[r.rating] = rating_counts.get(r.rating, 0) + 1
+
+    all_scores = [r.total_score for r in results]
+    defeat_positions = [r.defeated_at for r in results if r.defeated_at >= 0]
+
+    return {
+        "total_runs":        n,
+        "runs_completed":    completed,
+        "runs_defeated":     defeated,
+        "completion_rate":   completed / n,
+        "avg_score":         statistics.mean(all_scores),
+        "median_score":      statistics.median(all_scores),
+        "rating_counts":     rating_counts,
+        "avg_defeat_at":     statistics.mean(defeat_positions) if defeat_positions else None,
+    }
+
+
+def print_run_report(results: list[RunResult]) -> None:
+    stats = generate_run_report(results)
+    W = 60
+    print("\n" + "=" * W)
+    print("  RUN SIMULATION REPORT  (4-encounter sequential)")
+    print("=" * W)
+    print(f"  Runs simulated:    {stats['total_runs']:>8,}")
+    print(f"  Runs completed:    {stats['runs_completed']:>8,}  ({stats['completion_rate']:.1%})")
+    print(f"  Runs aborted:      {stats['runs_defeated']:>8,}  ({1 - stats['completion_rate']:.1%})")
+    print("-" * W)
+    print(f"  Avg total score:   {stats['avg_score']:>8.1f}")
+    print(f"  Median score:      {stats['median_score']:>8.1f}")
+    if stats["avg_defeat_at"] is not None:
+        print(f"  Avg defeat at enc: {stats['avg_defeat_at']:>8.2f}  (0=first base)")
+    print("-" * W)
+    print("  Rating distribution:")
+    for rating in ("S", "A", "B", "C", "D", "E", "F"):
+        count = stats["rating_counts"].get(rating, 0)
+        pct = count / stats["total_runs"]
+        print(f"    {rating}: {count:>7,}  ({pct:.1%})")
+    print("=" * W + "\n")

@@ -8,7 +8,7 @@ extends Node
 # ── Attori ───────────────────────────────────────────────────────────────────
 
 ## HP massimi del giocatore
-@export var player_max_hp: int = 20
+@export var player_max_hp: int = 25
 
 ## HP massimi del nemico
 @export var enemy_max_hp: int = 20
@@ -52,6 +52,26 @@ extends Node
 
 ## Delay (secondi) tra una carta nemico e la successiva durante ENEMY_PLAY.
 @export_range(0.1, 2.0, 0.1) var enemy_card_play_delay: float = 0.7
+
+# ── Punteggio e Rating ───────────────────────────────────────────────────────
+
+## Punteggio base per ogni nemico normale
+@export var score_base_enemy: int = 100
+
+## Punteggio base per ogni nemico elite
+@export var score_elite_enemy: int = 250
+
+## Punteggio base per il boss
+@export var score_boss_enemy: int = 500
+
+## Soglia punteggio per rating B (richiede vittoria completa)
+@export var rating_b_threshold: int = 200
+
+## Soglia punteggio per rating A (richiede vittoria completa)
+@export var rating_a_threshold: int = 600
+
+## Soglia punteggio per rating S (richiede vittoria completa)
+@export var rating_s_threshold: int = 1200
 
 func _ready() -> void:
 	DebugLogger.log_system("[Config] player_hp=%d | enemy_hp=%d | energy=%d/%d | draw=%d | animate_enemy=%s" % [

@@ -5,6 +5,8 @@ run_playtests.py — CLI entry point for the balance simulation suite.
 Usage:
     python playtests/run_playtests.py
     python playtests/run_playtests.py --games 20000
+    python playtests/run_playtests.py --mode single   # single-encounter stats
+    python playtests/run_playtests.py --mode run       # full 4-encounter run stats (default)
     python playtests/run_playtests.py --games 1000 --csv results.csv
     python playtests/run_playtests.py --history  # record per-turn HP snapshots (slower)
 
@@ -29,7 +31,13 @@ def _parse_args() -> argparse.Namespace:
         type=int,
         default=10_000,
         metavar="N",
-        help="Number of games to simulate (default: 10 000).",
+        help="Number of simulations to run (default: 10 000).",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["single", "run"],
+        default="run",
+        help="'run' (default): simulate full 4-encounter run; 'single': single encounter.",
     )
     parser.add_argument(
         "--csv",
@@ -48,32 +56,48 @@ def _parse_args() -> argparse.Namespace:
 
 
 def _progress(n: int) -> None:
-    print(f"  ... {n:,} games done", end="\r", flush=True)
+    print(f"  ... {n:,} done", end="\r", flush=True)
 
 
-def _export_csv(results, path: str) -> None:
+def _export_csv_single(results, path: str) -> None:
     fieldnames = ["game", "winner", "turns", "player_hp_final", "enemy_hp_final"]
     with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for i, r in enumerate(results, 1):
-            writer.writerow(
-                {
-                    "game": i,
-                    "winner": r.winner,
-                    "turns": r.turns,
-                    "player_hp_final": r.player_hp_final,
-                    "enemy_hp_final": r.enemy_hp_final,
-                }
-            )
+            writer.writerow({
+                "game": i,
+                "winner": r.winner,
+                "turns": r.turns,
+                "player_hp_final": r.player_hp_final,
+                "enemy_hp_final": r.enemy_hp_final,
+            })
+    print(f"  CSV exported → {path}")
+
+
+def _export_csv_run(results, path: str) -> None:
+    fieldnames = ["run", "rating", "total_score", "defeated_at", "encounters_won"]
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for i, r in enumerate(results, 1):
+            writer.writerow({
+                "run": i,
+                "rating": r.rating,
+                "total_score": round(r.total_score, 2),
+                "defeated_at": r.defeated_at,
+                "encounters_won": len(r.scores),
+            })
     print(f"  CSV exported → {path}")
 
 
 def main() -> None:
-    # Import here so path issues surface with a clear message
     try:
-        from playtests.analysis.runner import run_simulations
-        from playtests.analysis.report import print_report, print_balance_recommendations
+        from playtests.analysis.runner import run_simulations, run_run_simulations
+        from playtests.analysis.report import (
+            print_report, print_balance_recommendations,
+            print_run_report,
+        )
     except ImportError as exc:
         print(
             f"Import error: {exc}\n"
@@ -86,18 +110,33 @@ def main() -> None:
 
     args = _parse_args()
 
-    print(f"\nRunning {args.games:,} simulations …")
+    print(f"\nRunning {args.games:,} simulations (mode={args.mode}) …")
     t0 = time.perf_counter()
-    results = run_simulations(
-        n=args.games,
-        record_history=args.history,
-        progress_callback=_progress,
-    )
-    elapsed = time.perf_counter() - t0
-    print(f"  Done in {elapsed:.1f}s ({args.games / elapsed:,.0f} games/s)    ")
 
-    print_report(results)
-    print_balance_recommendations(results)
+    if args.mode == "run":
+        results = run_run_simulations(
+            n=args.games,
+            record_history=args.history,
+            progress_callback=_progress,
+        )
+        elapsed = time.perf_counter() - t0
+        print(f"  Done in {elapsed:.1f}s ({args.games / elapsed:,.0f} runs/s)    ")
+        print_run_report(results)
+        if args.csv_path:
+            _export_csv_run(results, args.csv_path)
+    else:
+        results = run_simulations(
+            n=args.games,
+            record_history=args.history,
+            progress_callback=_progress,
+        )
+        elapsed = time.perf_counter() - t0
+        print(f"  Done in {elapsed:.1f}s ({args.games / elapsed:,.0f} games/s)    ")
+        print_report(results)
+        print_balance_recommendations(results)
+        if args.csv_path:
+            _export_csv_single(results, args.csv_path)
+
 
     if args.csv_path:
         _export_csv(results, args.csv_path)

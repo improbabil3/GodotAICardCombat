@@ -1,25 +1,24 @@
 {
-	"deck_name": "Phoenix Guardian Specific",
-	"cards": [
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Fortify", "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify"},
-		{"name": "Deflect Field", "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field"},
-		{"name": "Deflect Field", "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field"},
-		{"name": "Heal Ray", "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "heal_ray"},
-		{"name": "Heal Ray", "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "heal_ray"},
-		{"name": "Energy Wave", "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "energy_wave"},
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Heal Ray", "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "heal_ray"},
-		{"name": "Fortify", "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify"},
-		{"name": "Energy Wave", "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "energy_wave"},
-		{"name": "Deflect Field", "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field"},
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Heal Ray", "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "heal_ray"},
-		{"name": "Fortify", "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify"}
-	]
+	"deck_name": "Phoenix Guardian Specific",  "cards": [
+    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
+    { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
+    { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
+    { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
+    { "name": "Retribution",     "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "retribution"     },
+    { "name": "Retribution",     "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "retribution"     },
+    { "name": "Retribution",     "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "retribution"     },
+    { "name": "Retribution",     "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "retribution"     },
+    { "name": "Phoenix Burst",   "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "phoenix_burst"   },
+    { "name": "Phoenix Burst",   "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "phoenix_burst"   },
+    { "name": "Phoenix Burst",   "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "phoenix_burst"   },
+    { "name": "Phoenix Burst",   "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "phoenix_burst"   },
+    { "name": "Mending Strike",  "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "mending_strike"  },
+    { "name": "Mending Strike",  "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "mending_strike"  },
+    { "name": "Mending Strike",  "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "mending_strike"  },
+    { "name": "Mending Strike",  "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "mending_strike"  }
+  ]
 }

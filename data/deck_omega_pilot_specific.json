@@ -1,25 +1,24 @@
 {
-	"deck_name": "Omega Pilot Specific",
-	"cards": [
-		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
-		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Ion Strike", "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "ion_strike"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Deflect Field", "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "deflect_field"},
-		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
-		{"name": "Momentum Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "momentum_slash"},
-		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
-		{"name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade"},
-		{"name": "Fortify", "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify"},
-		{"name": "Energy Wave", "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "energy_wave"},
-		{"name": "Ion Strike", "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "ion_strike"},
-		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Nano Shield", "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "nano_shield"},
-		{"name": "Barrier Matrix", "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "barrier_matrix"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"}
-	]
+	"deck_name": "Omega Pilot Specific",  "cards": [
+    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
+    { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
+    { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
+    { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
+    { "name": "Particle Blade",  "damage": 2, "shield": 1, "heal": 0, "energy": 1, "image": "particle_blade"  },
+    { "name": "Particle Blade",  "damage": 2, "shield": 1, "heal": 0, "energy": 1, "image": "particle_blade"  },
+    { "name": "Particle Blade",  "damage": 2, "shield": 1, "heal": 0, "energy": 1, "image": "particle_blade"  },
+    { "name": "Particle Blade",  "damage": 2, "shield": 1, "heal": 0, "energy": 1, "image": "particle_blade"  },
+    { "name": "Mega Blast",      "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "mega_blast"      },
+    { "name": "Mega Blast",      "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "mega_blast"      },
+    { "name": "Mega Blast",      "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "mega_blast"      },
+    { "name": "Mega Blast",      "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "mega_blast"      },
+    { "name": "Piercing Beam",   "damage": 4, "shield": 1, "heal": 0, "energy": 2, "image": "piercing_beam"   },
+    { "name": "Piercing Beam",   "damage": 4, "shield": 1, "heal": 0, "energy": 2, "image": "piercing_beam"   },
+    { "name": "Piercing Beam",   "damage": 4, "shield": 1, "heal": 0, "energy": 2, "image": "piercing_beam"   },
+    { "name": "Piercing Beam",   "damage": 4, "shield": 1, "heal": 0, "energy": 2, "image": "piercing_beam"   }
+  ]
 }

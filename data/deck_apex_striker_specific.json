@@ -1,25 +1,24 @@
 {
-	"deck_name": "Apex Striker Specific",
-	"cards": [
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
-		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
-		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
-		{"name": "Particle Blade", "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "particle_blade"},
-		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
-		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
-		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"},
-		{"name": "Momentum Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "momentum_slash"},
-		{"name": "Laser Burst", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "laser_burst"},
-		{"name": "Plasma Cannon", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_cannon"},
-		{"name": "Power Slash", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "power_slash"},
-		{"name": "Piercing Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "piercing_strike"},
-		{"name": "Swift Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"}
-	]
+	"deck_name": "Apex Striker Specific",  "cards": [
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
+    { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
+    { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
+    { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
+    { "name": "Hyper Shot",      "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "hyper_shot"      },
+    { "name": "Hyper Shot",      "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "hyper_shot"      },
+    { "name": "Hyper Shot",      "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "hyper_shot"      },
+    { "name": "Hyper Shot",      "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "hyper_shot"      },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Hyper Pulse",     "damage": 4, "shield": 0, "heal": 1, "energy": 2, "image": "hyper_pulse"     },
+    { "name": "Hyper Pulse",     "damage": 4, "shield": 0, "heal": 1, "energy": 2, "image": "hyper_pulse"     },
+    { "name": "Hyper Pulse",     "damage": 4, "shield": 0, "heal": 1, "energy": 2, "image": "hyper_pulse"     },
+    { "name": "Hyper Pulse",     "damage": 4, "shield": 0, "heal": 1, "energy": 2, "image": "hyper_pulse"     }
+  ]
 }

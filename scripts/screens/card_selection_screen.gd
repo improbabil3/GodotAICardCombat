@@ -128,12 +128,12 @@ func _on_confirm_pressed() -> void:
 		if i < base_copy.size():
 			final_deck.append(base_copy[i])
 	
-	# Salva nel GameManager e inizia il gioco
+	# Salva nel GameManager e avvia la run
 	GameManager.selected_character = _selected_character
 	GameManager.player_deck = final_deck
 	
 	DebugLogger.log_system("CardSelectionScreen: mazzo costruito — 10 specifiche + 10 base random = %d carte" % final_deck.size())
-	GameManager.start_game()
+	GameManager.start_run()
 
 func _on_back_pressed() -> void:
 	DebugLogger.log_system("CardSelectionScreen: ritorno al carosello personaggi")

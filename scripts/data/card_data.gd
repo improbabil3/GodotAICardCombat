@@ -9,8 +9,8 @@ extends Resource
 ## Nome della carta (es. "Laser Blast")
 @export var card_name: String = ""
 
-## Danno inflitto (0 = assente, 1-3)
-@export_range(0, 3) var damage: int = 0
+## Danno inflitto (0 = assente, 1-5)
+@export_range(0, 5) var damage: int = 0
 
 ## Scudo fornito (0 = assente, 1-3)
 @export_range(0, 3) var shield: int = 0

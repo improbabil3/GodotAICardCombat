@@ -1,6 +1,6 @@
 from __future__ import annotations
 from collections.abc import Callable
-from ..sim.game import Game, GameResult
+from ..sim.game import Game, GameResult, RunGame, RunResult
 
 
 def run_simulations(
@@ -9,16 +9,10 @@ def run_simulations(
     progress_callback: Callable[[int], None] | None = None,
 ) -> list[GameResult]:
     """
-    Run n independent game simulations and return all results.
+    Run n independent single-encounter simulations.
 
     A single Game instance is reused because its state is fully reset
     inside Game.run() on each call (fresh Actors, fresh shuffled decks).
-
-    Args:
-        n: Number of games to simulate.
-        record_history: Whether to record per-turn HP snapshots.
-        progress_callback: Optional callable invoked every 1 000 games
-            with the number of completed games so far.
     """
     game = Game(record_history=record_history)
     results: list[GameResult] = []
@@ -27,3 +21,22 @@ def run_simulations(
         if progress_callback and (i + 1) % 1_000 == 0:
             progress_callback(i + 1)
     return results
+
+
+def run_run_simulations(
+    n: int = 10_000,
+    record_history: bool = False,
+    progress_callback: Callable[[int], None] | None = None,
+) -> list[RunResult]:
+    """
+    Run n independent full-run simulations (4 sequential encounters).
+    Mirrors the GameManager run lifecycle in GDScript.
+    """
+    run_game = RunGame(record_history=record_history)
+    results: list[RunResult] = []
+    for i in range(n):
+        results.append(run_game.run())
+        if progress_callback and (i + 1) % 1_000 == 0:
+            progress_callback(i + 1)
+    return results
+

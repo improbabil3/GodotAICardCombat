@@ -73,8 +73,8 @@ static func _parse_card(raw: Dictionary, index: int, source_path: String) -> Car
 
 	# Validazione valori
 	var errors: Array[String] = []
-	if damage < 0 or damage > 3:
-		errors.append("damage=%d fuori range [0,3]" % damage)
+	if damage < 0 or damage > 5:
+		errors.append("damage=%d fuori range [0,5]" % damage)
 	if shield < 0 or shield > 3:
 		errors.append("shield=%d fuori range [0,3]" % shield)
 	if heal < 0 or heal > 2:

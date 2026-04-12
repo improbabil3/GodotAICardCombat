@@ -78,19 +78,32 @@ func _setup_actors() -> void:
 	var player_name := "Omega Pilot"
 	if GameManager.selected_character != null:
 		player_name = GameManager.selected_character.name
-	
+
 	_player = ActorData.new(player_name, Config.player_max_hp, Config.player_max_energy)
-	_enemy  = ActorData.new("Nexus Warlord",  Config.enemy_max_hp,  Config.enemy_max_energy)
+
+	# Carica i dati del nemico corrente dalla run
+	var enemy_data := GameManager.get_current_enemy()
+	if enemy_data != null:
+		_enemy = ActorData.new(enemy_data.enemy_name, enemy_data.max_hp, enemy_data.max_energy)
+	else:
+		# Fallback di sicurezza
+		_enemy = ActorData.new("Nexus Warlord", Config.enemy_max_hp, Config.enemy_max_energy)
+		DebugLogger.log_error("GameScreen: nessun enemico nel roster, uso fallback")
 
 	# Usa il mazzo scelto dal player se disponibile, altrimenti carica dal default
 	var player_cards: Array[CardData]
 	if GameManager.player_deck.size() > 0:
 		player_cards = GameManager.player_deck.duplicate()
+		DeckManager.shuffle_deck(player_cards)
 	else:
 		player_cards = DeckLoader.load_deck("res://data/deck_player.json")
 		DeckManager.shuffle_deck(player_cards)
-	
-	var enemy_cards := DeckLoader.load_deck("res://data/deck_enemy.json")
+
+	# Carica il mazzo del nemico corrente
+	var enemy_deck_path := "res://data/deck_enemy.json"
+	if enemy_data != null:
+		enemy_deck_path = enemy_data.deck_path
+	var enemy_cards := DeckLoader.load_deck(enemy_deck_path)
 	DeckManager.shuffle_deck(enemy_cards)
 
 	_player.deck = player_cards
@@ -100,7 +113,9 @@ func _setup_actors() -> void:
 	GameManager.player = _player
 	GameManager.enemy  = _enemy
 
-	DebugLogger.log_system("GameScreen: attori inizializzati")
+	DebugLogger.log_system("GameScreen: attori inizializzati — %s vs %s (incontro %d)" % [
+		_player.actor_name, _enemy.actor_name, GameManager.encounter_index + 1
+	])
 
 func _setup_ui_references() -> void:
 	# HandUI è il nodo HandContainer dentro HandArea
@@ -178,7 +193,11 @@ func _on_state_changed(new_state: TurnManager.State) -> void:
 				_animating = false
 
 		TurnManager.State.PLAYER_PLAY:
-			_turn_label.text = "Turno %d — Il tuo turno!" % _turn_manager.turn_number
+			var enemy_data := GameManager.get_current_enemy()
+			var encounter_label := ""
+			if enemy_data != null:
+				encounter_label = " [%s %d/4]" % [enemy_data.type_label(), GameManager.encounter_index + 1]
+			_turn_label.text = "Turno %d — Il tuo turno!%s" % [_turn_manager.turn_number, encounter_label]
 			_player_hand_ui.interactive = true
 			_player_panel.show_end_turn_button(true)
 			_refresh_hand_ui(_player_hand_ui, _player, true)
@@ -315,7 +334,10 @@ func _on_game_over(player_won: bool) -> void:
 	# Piccola pausa per godersi l'animazione finale, poi cambia scena
 	await get_tree().create_timer(1.8).timeout
 	if is_inside_tree():
-		GameManager.end_game(player_won)
+		if player_won:
+			GameManager.complete_encounter(_turn_manager.turn_number, _player.hp)
+		else:
+			GameManager.fail_encounter()
 
 # ── Tooltip ──────────────────────────────────────────────────────────────────
 
