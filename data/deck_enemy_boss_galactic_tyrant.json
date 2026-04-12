@@ -1,0 +1,25 @@
+{
+  "deck_name": "Galactic Tyrant Deck",
+  "cards": [
+    { "name": "Tyrant Smash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "tyrant_smash" },
+    { "name": "Tyrant Smash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "tyrant_smash" },
+    { "name": "Tyrant Smash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "tyrant_smash" },
+    { "name": "Tyrant Smash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "tyrant_smash" },
+    { "name": "Galactic Fury",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "galactic_fury" },
+    { "name": "Galactic Fury",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "galactic_fury" },
+    { "name": "Galactic Fury",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "galactic_fury" },
+    { "name": "Cosmic Rampart",  "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "cosmic_rampart" },
+    { "name": "Cosmic Rampart",  "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "cosmic_rampart" },
+    { "name": "Cosmic Rampart",  "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "cosmic_rampart" },
+    { "name": "Nova Cannon",     "damage": 3, "shield": 1, "heal": 0, "energy": 2, "image": "nova_cannon" },
+    { "name": "Nova Cannon",     "damage": 3, "shield": 1, "heal": 0, "energy": 2, "image": "nova_cannon" },
+    { "name": "Reign of Stars",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "reign_of_stars" },
+    { "name": "Reign of Stars",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "reign_of_stars" },
+    { "name": "Emperor's Will",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "emperors_will" },
+    { "name": "Emperor's Will",  "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "emperors_will" },
+    { "name": "Astral Crush",    "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "astral_crush" },
+    { "name": "Astral Crush",    "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "astral_crush" },
+    { "name": "Tyrant Smash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "tyrant_smash" },
+    { "name": "Galactic Fury",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "galactic_fury" }
+  ]
+}

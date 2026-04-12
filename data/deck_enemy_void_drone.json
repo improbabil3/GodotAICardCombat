@@ -1,0 +1,25 @@
+{
+  "deck_name": "Void Drone Deck",
+  "cards": [
+    { "name": "Barrier Grid",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "barrier_grid" },
+    { "name": "Barrier Grid",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "barrier_grid" },
+    { "name": "Barrier Grid",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "barrier_grid" },
+    { "name": "Steel Shell",    "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "steel_shell" },
+    { "name": "Steel Shell",    "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "steel_shell" },
+    { "name": "Micro Shield",   "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "micro_shield" },
+    { "name": "Micro Shield",   "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "micro_shield" },
+    { "name": "Micro Shield",   "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "micro_shield" },
+    { "name": "Drone Zap",      "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "drone_zap" },
+    { "name": "Drone Zap",      "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "drone_zap" },
+    { "name": "Drone Zap",      "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "drone_zap" },
+    { "name": "System Repair",  "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "system_repair" },
+    { "name": "System Repair",  "damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "system_repair" },
+    { "name": "Fortify Grid",   "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify_grid" },
+    { "name": "Fortify Grid",   "damage": 0, "shield": 3, "heal": 0, "energy": 1, "image": "fortify_grid" },
+    { "name": "Shield Pulse",   "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shield_pulse" },
+    { "name": "Shield Pulse",   "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shield_pulse" },
+    { "name": "Overcharge",     "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "overcharge" },
+    { "name": "Barrier Grid",   "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "barrier_grid" },
+    { "name": "Drone Zap",      "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "drone_zap" }
+  ]
+}

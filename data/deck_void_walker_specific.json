@@ -1,0 +1,24 @@
+{
+	"deck_name": "Void Walker Specific",  "cards": [
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
+    { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
+    { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
+    { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
+    { "name": "Void Slash",      "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash"      },
+    { "name": "Void Slash",      "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash"      },
+    { "name": "Void Slash",      "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash"      },
+    { "name": "Void Slash",      "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "void_slash"      },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Void Nova",       "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "void_nova"       },
+    { "name": "Shadow Fang",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "shadow_fang"     },
+    { "name": "Shadow Fang",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "shadow_fang"     },
+    { "name": "Shadow Fang",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "shadow_fang"     },
+    { "name": "Shadow Fang",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "shadow_fang"     }
+  ]
+}

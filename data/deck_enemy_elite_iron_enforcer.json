@@ -1,0 +1,25 @@
+{
+  "deck_name": "Iron Enforcer Deck",
+  "cards": [
+    { "name": "Enforcer Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "enforcer_strike" },
+    { "name": "Enforcer Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "enforcer_strike" },
+    { "name": "Enforcer Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "enforcer_strike" },
+    { "name": "Iron Wall",        "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "iron_wall" },
+    { "name": "Iron Wall",        "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "iron_wall" },
+    { "name": "Iron Wall",        "damage": 0, "shield": 3, "heal": 0, "energy": 2, "image": "iron_wall" },
+    { "name": "Plate Bash",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plate_bash" },
+    { "name": "Plate Bash",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plate_bash" },
+    { "name": "Bulwark",          "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "bulwark" },
+    { "name": "Bulwark",          "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "bulwark" },
+    { "name": "Bulwark",          "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "bulwark" },
+    { "name": "Fortified Hit",    "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "fortified_hit" },
+    { "name": "Fortified Hit",    "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "fortified_hit" },
+    { "name": "Iron Pulse",       "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "iron_pulse" },
+    { "name": "Iron Pulse",       "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "iron_pulse" },
+    { "name": "Iron Pulse",       "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "iron_pulse" },
+    { "name": "Recovery Protocol","damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "recovery_protocol" },
+    { "name": "Recovery Protocol","damage": 0, "shield": 0, "heal": 2, "energy": 1, "image": "recovery_protocol" },
+    { "name": "Plate Bash",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plate_bash" },
+    { "name": "Enforcer Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "enforcer_strike" }
+  ]
+}

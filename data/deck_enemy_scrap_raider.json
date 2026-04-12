@@ -1,0 +1,25 @@
+{
+  "deck_name": "Scrap Raider Deck",
+  "cards": [
+    { "name": "Scrap Slash",    "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "scrap_slash" },
+    { "name": "Scrap Slash",    "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "scrap_slash" },
+    { "name": "Scrap Slash",    "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "scrap_slash" },
+    { "name": "Junk Blade",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "junk_blade" },
+    { "name": "Junk Blade",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "junk_blade" },
+    { "name": "Junk Blade",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "junk_blade" },
+    { "name": "Rust Spike",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "rust_spike" },
+    { "name": "Rust Spike",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "rust_spike" },
+    { "name": "Salvage Strike", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "salvage_strike" },
+    { "name": "Salvage Strike", "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "salvage_strike" },
+    { "name": "Rusty Guard",    "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "rusty_guard" },
+    { "name": "Rusty Guard",    "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "rusty_guard" },
+    { "name": "Patch Up",       "damage": 0, "shield": 0, "heal": 1, "energy": 0, "image": "patch_up" },
+    { "name": "Patch Up",       "damage": 0, "shield": 0, "heal": 1, "energy": 0, "image": "patch_up" },
+    { "name": "Scrap Barrage",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "scrap_barrage" },
+    { "name": "Scrap Barrage",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "scrap_barrage" },
+    { "name": "Junk Bash",      "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "junk_bash" },
+    { "name": "Junk Bash",      "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "junk_bash" },
+    { "name": "Scrap Slash",    "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "scrap_slash" },
+    { "name": "Rusty Guard",    "damage": 0, "shield": 1, "heal": 0, "energy": 0, "image": "rusty_guard" }
+  ]
+}

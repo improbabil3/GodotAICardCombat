@@ -1,0 +1,24 @@
+{
+	"deck_name": "Cyber Mystic Specific",  "cards": [
+    { "name": "Data Spike",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "data_spike"      },
+    { "name": "Data Spike",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "data_spike"      },
+    { "name": "Data Spike",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "data_spike"      },
+    { "name": "Data Spike",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "data_spike"      },
+    { "name": "Neural Strike",   "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "neural_strike"   },
+    { "name": "Neural Strike",   "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "neural_strike"   },
+    { "name": "Neural Strike",   "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "neural_strike"   },
+    { "name": "Neural Strike",   "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "neural_strike"   },
+    { "name": "Mystic Surge",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "mystic_surge"    },
+    { "name": "Mystic Surge",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "mystic_surge"    },
+    { "name": "Mystic Surge",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "mystic_surge"    },
+    { "name": "Mystic Surge",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "mystic_surge"    },
+    { "name": "Overload",        "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "overload"        },
+    { "name": "Overload",        "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "overload"        },
+    { "name": "Overload",        "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "overload"        },
+    { "name": "Overload",        "damage": 5, "shield": 0, "heal": 0, "energy": 2, "image": "overload"        },
+    { "name": "Cyber Slash",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "cyber_slash"     },
+    { "name": "Cyber Slash",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "cyber_slash"     },
+    { "name": "Cyber Slash",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "cyber_slash"     },
+    { "name": "Cyber Slash",     "damage": 3, "shield": 0, "heal": 1, "energy": 2, "image": "cyber_slash"     }
+  ]
+}

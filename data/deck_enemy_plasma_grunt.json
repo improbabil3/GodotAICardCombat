@@ -1,0 +1,25 @@
+{
+  "deck_name": "Plasma Grunt Deck",
+  "cards": [
+    { "name": "Plasma Blast",   "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_blast" },
+    { "name": "Plasma Blast",   "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_blast" },
+    { "name": "Plasma Blast",   "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "plasma_blast" },
+    { "name": "Heat Punch",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "heat_punch" },
+    { "name": "Heat Punch",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "heat_punch" },
+    { "name": "Heat Punch",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "heat_punch" },
+    { "name": "Meltdown",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "meltdown" },
+    { "name": "Meltdown",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "meltdown" },
+    { "name": "Fusion Claw",    "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "fusion_claw" },
+    { "name": "Fusion Claw",    "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "fusion_claw" },
+    { "name": "Char Burst",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "char_burst" },
+    { "name": "Char Burst",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "char_burst" },
+    { "name": "Char Burst",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "char_burst" },
+    { "name": "Heat Shield",    "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "heat_shield" },
+    { "name": "Heat Shield",    "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "heat_shield" },
+    { "name": "Plasma Burst",   "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "plasma_burst" },
+    { "name": "Plasma Burst",   "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "plasma_burst" },
+    { "name": "Thermal Surge",  "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "thermal_surge" },
+    { "name": "Char Burst",     "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "char_burst" },
+    { "name": "Heat Punch",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "heat_punch" }
+  ]
+}
