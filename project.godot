@@ -36,3 +36,12 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Galactic Clash"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+[android]
+
+sdk_path = "C:\Users\iMpRo\AppData\Local\Android\Sdk"
+ndk_path = "E:\Android\android-ndk-r27d"
+jdk_path = "E:\jdk-26"
