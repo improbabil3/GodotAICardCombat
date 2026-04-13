@@ -35,13 +35,17 @@ var run_defeated_at: int = -1
 ## Roster dei 4 nemici per questa run (scelti all'avvio)
 var enemy_roster: Array[EnemyData] = []
 
+## Dati dell'ultimo scontro completato (letti da BattleResultScreen)
+var last_result: Dictionary = {}
+
 ## Scene registrate
-const SCENE_TITLE       := "res://scenes/screens/title_screen.tscn"
-const SCENE_CHARACTER   := "res://scenes/screens/character_selection_screen.tscn"
-const SCENE_CARD        := "res://scenes/screens/card_selection_screen.tscn"
-const SCENE_GAME        := "res://scenes/screens/game_screen.tscn"
-const SCENE_VICTORY     := "res://scenes/screens/victory_screen.tscn"
-const SCENE_DEFEAT      := "res://scenes/screens/defeat_screen.tscn"
+const SCENE_TITLE         := "res://scenes/screens/title_screen.tscn"
+const SCENE_CHARACTER     := "res://scenes/screens/character_selection_screen.tscn"
+const SCENE_CARD          := "res://scenes/screens/card_selection_screen.tscn"
+const SCENE_GAME          := "res://scenes/screens/game_screen.tscn"
+const SCENE_BATTLE_RESULT := "res://scenes/screens/battle_result_screen.tscn"
+const SCENE_VICTORY       := "res://scenes/screens/victory_screen.tscn"
+const SCENE_DEFEAT        := "res://scenes/screens/defeat_screen.tscn"
 
 func _ready() -> void:
 	DebugLogger.log_system("GameManager: avviato")
@@ -87,15 +91,33 @@ func complete_encounter(turns: int, player_hp_remaining: int) -> void:
 	DebugLogger.log_turn("GameManager: scontro %d vinto — score=%.1f (base=%d hp=%d turns=%d)" % [
 		encounter_index + 1, score, enemy_data.base_score, player_hp_remaining, turns
 	])
+	# Salva il riepilogo per BattleResultScreen
+	last_result = {
+		"encounter_num":    encounter_index + 1,
+		"total_encounters": enemy_roster.size(),
+		"enemy_name":       enemy_data.enemy_name,
+		"enemy_type_label": enemy_data.type_label(),
+		"score":            score,
+		"hp_remaining":     player_hp_remaining,
+		"turns":            turns,
+	}
 	encounter_index += 1
 	if encounter_index >= enemy_roster.size():
-		# Run completata: vittoria!
+		# Run completata: vittoria finale
 		DebugLogger.separator()
 		DebugLogger.log_turn("GameManager: RUN COMPLETATA — punteggio totale=%.0f" % total_score())
 		_change_scene(SCENE_VICTORY)
 	else:
-		# Prossimo incontro
-		start_game()
+		# Mostra il resoconto inter-battaglia prima dello scontro successivo
+		DebugLogger.log_turn("GameManager: resoconto scontro %d — prossimo: %s" % [
+			encounter_index, _current_enemy_name()
+		])
+		_change_scene(SCENE_BATTLE_RESULT)
+
+## Chiamato da BattleResultScreen quando il giocatore preme "Continua"
+func continue_run() -> void:
+	DebugLogger.log_turn("GameManager: continua run — avvio incontro %d" % (encounter_index + 1))
+	start_game()
 
 ## Chiamato da GameScreen quando il giocatore viene sconfitto
 func fail_encounter() -> void:
@@ -116,6 +138,7 @@ func return_to_menu() -> void:
 	run_scores.clear()
 	run_defeated_at = -1
 	enemy_roster.clear()
+	last_result.clear()
 	DebugLogger.log_system("GameManager: ritorno al menu principale")
 	_change_scene(SCENE_TITLE)
 
