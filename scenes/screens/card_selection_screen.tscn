@@ -10,68 +10,67 @@ anchors_right = 1.0
 anchors_bottom = 1.0
 script = ExtResource("1_abc12")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1015547741]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_left = 0.0
 anchors_top = 0.0
 anchors_right = 1.0
 anchors_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
 
-[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=470626331]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1015547741]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=470626331]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="CharacterInfoLeft" type="VBoxContainer" parent="VBoxContainer/TopBar" unique_id=1778122937]
+[node name="CharacterInfoLeft" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TopBar" unique_id=1778122937]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CharacterNameCard" type="Label" parent="VBoxContainer/TopBar/CharacterInfoLeft" unique_id=2006951291]
+[node name="CharacterNameCard" type="Label" parent="CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=2006951291]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Phoenix Guardian"
 
-[node name="CharacterDescriptionCard" type="Label" parent="VBoxContainer/TopBar/CharacterInfoLeft" unique_id=1944105381]
+[node name="CharacterDescriptionCard" type="Label" parent="CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=1944105381]
 layout_mode = 2
 text = "Descrizione personaggio"
 text_overrun_behavior = 2
 
-[node name="SelectionCounter" type="Label" parent="VBoxContainer/TopBar" unique_id=428543638]
+[node name="SelectionCounter" type="Label" parent="CenterContainer/VBoxContainer/TopBar" unique_id=428543638]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "0 / 10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=306527988]
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=306527988]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Seleziona 10 carte del personaggio:"
 
-[node name="CardGridScroll" type="ScrollContainer" parent="VBoxContainer" unique_id=974005281]
+[node name="CardGridScroll" type="ScrollContainer" parent="CenterContainer/VBoxContainer" unique_id=974005281]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CardGrid" type="GridContainer" parent="VBoxContainer/CardGridScroll" unique_id=1996905866]
+[node name="CardGrid" type="GridContainer" parent="CenterContainer/VBoxContainer/CardGridScroll" unique_id=1996905866]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 5
 
-[node name="BottomBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1753397602]
+[node name="BottomBar" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1753397602]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="VBoxContainer/BottomBar" unique_id=1035615458]
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer/BottomBar" unique_id=1035615458]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "Indietro"
 
-[node name="ConfirmButton" type="Button" parent="VBoxContainer/BottomBar" unique_id=1390038275]
+[node name="ConfirmButton" type="Button" parent="CenterContainer/VBoxContainer/BottomBar" unique_id=1390038275]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3

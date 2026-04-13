@@ -10,38 +10,37 @@ anchors_right = 1.0
 anchors_bottom = 1.0
 script = ExtResource("1_w8xyd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_left = 0.0
 anchors_top = 0.0
 anchors_right = 1.0
 anchors_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
 
-[node name="CarouselContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="CarouselContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CarouselLabel" type="Label" parent="VBoxContainer/CarouselContainer"]
+[node name="CarouselLabel" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer"]
 layout_mode = 2
 text = "Scegli il tuo personaggio"
 horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 
-[node name="CarouselArea" type="HBoxContainer" parent="VBoxContainer/CarouselContainer"]
+[node name="CarouselArea" type="HBoxContainer" parent="CenterContainer/VBoxContainer/CarouselContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="PrevButton" type="Button" parent="VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="PrevButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
 custom_minimum_size = Vector2(80, 0)
 text = "< Precedente"
 
-[node name="CharacterPanel" type="PanelContainer" parent="VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="CharacterPanel" type="PanelContainer" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 size_flags_vertical = 3
@@ -77,7 +76,7 @@ text_overrun_behavior = 2
 layout_mode = 2
 text = "Seleziona"
 
-[node name="NextButton" type="Button" parent="VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="NextButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
 custom_minimum_size = Vector2(80, 0)
 text = "Successivo >"
