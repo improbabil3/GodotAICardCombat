@@ -6,12 +6,12 @@
 extends Control
 
 # ── Riferimenti UI ─────────────────────────────────────────────────────────────
-@onready var _character_name_card: Label = $VBoxContainer/TopBar/CharacterInfoLeft/CharacterNameCard
-@onready var _character_description_card: Label = $VBoxContainer/TopBar/CharacterInfoLeft/CharacterDescriptionCard
-@onready var _selection_counter: Label = $VBoxContainer/TopBar/SelectionCounter
-@onready var _card_grid: GridContainer = $VBoxContainer/CardGridScroll/CardGrid
-@onready var _confirm_button: Button = $VBoxContainer/BottomBar/ConfirmButton
-@onready var _back_button: Button = $VBoxContainer/BottomBar/BackButton
+@onready var _character_name_card: Label = $CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft/CharacterNameCard
+@onready var _character_description_card: Label = $CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft/CharacterDescriptionCard
+@onready var _selection_counter: Label = $CenterContainer/VBoxContainer/TopBar/SelectionCounter
+@onready var _card_grid: GridContainer = $CenterContainer/VBoxContainer/CardGridScroll/CardGrid
+@onready var _confirm_button: Button = $CenterContainer/VBoxContainer/BottomBar/ConfirmButton
+@onready var _back_button: Button = $CenterContainer/VBoxContainer/BottomBar/BackButton
 
 # ── Stato ──────────────────────────────────────────────────────────────────────
 var _selected_character: CharacterData = null

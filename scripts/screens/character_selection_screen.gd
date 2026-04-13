@@ -6,13 +6,13 @@
 extends Control
 
 # ── Riferimenti UI ─────────────────────────────────────────────────────────────
-@onready var _carousel_label: Label = $VBoxContainer/CarouselContainer/CarouselLabel
-@onready var _prev_button: Button = $VBoxContainer/CarouselContainer/CarouselArea/PrevButton
-@onready var _next_button: Button = $VBoxContainer/CarouselContainer/CarouselArea/NextButton
-@onready var _character_image: Label = $VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterImage
-@onready var _character_name: Label = $VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterName
-@onready var _character_description: Label = $VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterDescription
-@onready var _select_button: Button = $VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/SelectButton
+@onready var _carousel_label: Label = $CenterContainer/VBoxContainer/CarouselContainer/CarouselLabel
+@onready var _prev_button: Button = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/PrevButton
+@onready var _next_button: Button = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/NextButton
+@onready var _character_image: Label = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterImage
+@onready var _character_name: Label = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterName
+@onready var _character_description: Label = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/CharacterDescription
+@onready var _select_button: Button = $CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo/SelectButton
 
 # ── Stato ──────────────────────────────────────────────────────────────────────
 var _carousel_index: int = 0
