@@ -45,7 +45,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 size_flags_vertical = 3
 
-[node name="CharacterInfo" type="VBoxContainer" parent="VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel"]
+[node name="CharacterInfo" type="VBoxContainer" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel"]
 layout_mode = 2
 offset_left = 4.0
 offset_top = 4.0
@@ -53,26 +53,26 @@ offset_right = -4.0
 offset_bottom = -4.0
 alignment = 1
 
-[node name="CharacterImage" type="Label" parent="VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterImage" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "[IMMAGINE]"
 horizontal_alignment = 1
 vertical_alignment = 1
 custom_minimum_size = Vector2(0, 150)
 
-[node name="CharacterName" type="Label" parent="VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterName" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "Phoenix Guardian"
 horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 
-[node name="CharacterDescription" type="Label" parent="VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterDescription" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "Descrizione personaggio"
 horizontal_alignment = 1
 text_overrun_behavior = 2
 
-[node name="SelectButton" type="Button" parent="VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="SelectButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "Seleziona"
 
