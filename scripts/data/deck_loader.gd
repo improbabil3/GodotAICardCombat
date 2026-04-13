@@ -70,6 +70,8 @@ static func _parse_card(raw: Dictionary, index: int, source_path: String) -> Car
 	var heal: int = int(raw.get("heal", 0))
 	var energy: int = int(raw.get("energy", 0))
 	var image: String = raw.get("image", "default")
+	var status_effect: String = raw.get("status_effect", "")
+	var status_target: String = raw.get("status_target", "")
 
 	# Validazione valori
 	var errors: Array[String] = []
@@ -88,10 +90,20 @@ static func _parse_card(raw: Dictionary, index: int, source_path: String) -> Car
 	if effect_count > 2:
 		errors.append("troppi effetti (%d > 2)" % effect_count)
 
+	# Validazione status_effect
+	const _VALID_STATUS := ["", "burn", "poison", "freeze", "haste", "blessed"]
+	const _VALID_TARGET := ["", "self", "opponent"]
+	if not status_effect in _VALID_STATUS:
+		errors.append("status_effect='%s' non valido" % status_effect)
+	if status_effect != "" and not status_target in _VALID_TARGET:
+		errors.append("status_target='%s' non valido" % status_target)
+	if status_effect != "" and status_target == "":
+		errors.append("status_effect='%s' senza status_target" % status_effect)
+
 	if errors.size() > 0:
 		DebugLogger.log_error("DeckLoader: carta '%s' (indice %d) invalida: %s — saltata" % [
 			card_name, index, ", ".join(errors)
 		])
 		return null
 
-	return CardData.create(card_name, damage, shield, heal, energy, image)
+	return CardData.create(card_name, damage, shield, heal, energy, image, status_effect, status_target)

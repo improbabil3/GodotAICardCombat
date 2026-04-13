@@ -63,6 +63,10 @@ func _ready() -> void:
 	_turn_manager.turn_started.connect(_on_turn_started)
 	_turn_manager.enemy_played_cards.connect(_on_enemy_played_cards)
 	_turn_manager.game_over.connect(_on_game_over)
+	_turn_manager.status_damage.connect(_on_status_damage)
+	_turn_manager.status_energy_changed.connect(_on_status_energy_changed)
+	_turn_manager.status_applied.connect(_on_status_applied_or_expired)
+	_turn_manager.status_expired.connect(_on_status_applied_or_expired)
 	# Aggiornamento UI iniziale
 	_refresh_all_ui()
 	# Avvia il gioco dopo un frame (per sicurezza che la UI sia pronta)
@@ -147,6 +151,10 @@ func _connect_ui_signals() -> void:
 func _on_state_changed(new_state: TurnManager.State) -> void:
 	DebugLogger.log_turn("GameScreen: stato → %s" % TurnManager.State.keys()[new_state])
 	match new_state:
+		TurnManager.State.STATUS_START:
+			_turn_label.text = "⚠ Effetti di stato..."
+			_refresh_actor_panels()
+
 		TurnManager.State.ENEMY_DRAW:
 			_player_hand_ui.interactive = false
 			_player_panel.show_end_turn_button(false)
@@ -288,6 +296,11 @@ func _on_player_card_played(card: CardData) -> void:
 	_player.add_card_intents(card)
 	DeckManager.discard_card(_player, card)
 
+	# Applica effetto di stato della carta (aggiorna actor + emette segnali TurnManager)
+	if card.has_status_effect():
+		_turn_manager.apply_player_card_status(card)
+		_refresh_actor_panels()  # aggiorna statuslabel subito
+
 	# Se no animazione, refresh immediato
 	if not is_instance_valid(card_ui) or Config.animation_speed <= 0.0:
 		_refresh_hand_ui(_player_hand_ui, _player, true)
@@ -347,6 +360,9 @@ func _on_card_hovered(card: CardData) -> void:
 	if card.damage > 0: effects.append("Danno: +%d" % card.damage)
 	if card.shield > 0: effects.append("Scudo: +%d" % card.shield)
 	if card.heal   > 0: effects.append("Guarigione: +%d" % card.heal)
+	if card.status_effect != "":
+		var tgt := "sé stesso" if card.status_target == "self" else "avversario"
+		effects.append("Stato: %s → %s" % [card.status_effect.to_upper(), tgt])
 	_tooltip_effects.text = "\n".join(effects)
 	_tooltip_energy.text  = "ENE: %d" % card.energy_cost
 	_tooltip.visible = true
@@ -382,6 +398,8 @@ func _refresh_actor_panels() -> void:
 	_animate_hp_next = false
 	_enemy_panel.update_actor(_enemy, anim)
 	_player_panel.update_actor(_player, anim)
+	_enemy_panel.update_status_effects(_enemy.status_effects)
+	_player_panel.update_status_effects(_player.status_effects)
 	# Feedback visivo combattimento
 	if anim:
 		if _player.current_intents.get("damage", 0) > 0:
@@ -409,3 +427,18 @@ func _refresh_deck_counts() -> void:
 	_enemy_graveyard_count.text  = "Cimitero: %d" % _enemy.graveyard.size()
 	_player_deck_count.text      = "Mazzo: %d" % _player.deck.size()
 	_player_graveyard_count.text = "Cimitero: %d" % _player.graveyard.size()
+
+# ── Gestione segnali status effect ──────────────────────────────────────────
+
+func _on_status_damage(actor_name: String, effect_name: String, _amount: int) -> void:
+	var panel := _enemy_panel if actor_name == _enemy.actor_name else _player_panel
+	_anim_mgr.animate_status_damage(panel, effect_name)
+	_refresh_actor_panels()
+
+func _on_status_energy_changed(actor_name: String, effect_name: String, _delta: int) -> void:
+	var panel := _enemy_panel if actor_name == _enemy.actor_name else _player_panel
+	_anim_mgr.animate_status_energy_changed(panel, effect_name)
+	_refresh_actor_panels()
+
+func _on_status_applied_or_expired(_actor_name: String, _effect_name: String) -> void:
+	_refresh_actor_panels()

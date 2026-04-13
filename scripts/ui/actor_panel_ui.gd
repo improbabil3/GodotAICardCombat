@@ -7,6 +7,7 @@ signal end_turn_pressed
 
 var _is_player: bool = false
 var _hp_tween: Tween = null
+var _status_label: Label = null
 
 @onready var _portrait: TextureRect = $HBox/Portrait
 @onready var _name_label: Label = $HBox/InfoBox/NameLabel
@@ -18,6 +19,14 @@ var _hp_tween: Tween = null
 func _ready() -> void:
 	_end_turn_btn.pressed.connect(func(): end_turn_pressed.emit())
 	_end_turn_btn.visible = false
+	# Etichetta dinamica per icone status effect
+	_status_label = Label.new()
+	_status_label.name = "StatusLabel"
+	_status_label.add_theme_font_size_override("font_size", 10)
+	_status_label.visible = false
+	$HBox/InfoBox.add_child(_status_label)
+	# Posiziona dopo HPBar (indice 2)
+	$HBox/InfoBox.move_child(_status_label, 2)
 
 ## Configura il pannello per il giocatore o il nemico
 func setup(is_player: bool) -> void:
@@ -87,3 +96,16 @@ func shake() -> void:
 	tween.tween_property(self, "position", origin - Vector2(6, 0), 0.05)
 	tween.tween_property(self, "position", origin + Vector2(4, 0), 0.04)
 	tween.tween_property(self, "position", origin, 0.04)
+
+## Aggiorna le icone degli effetti di stato
+func update_status_effects(effects: Dictionary) -> void:
+	if _status_label == null:
+		return
+	var parts: Array[String] = []
+	if effects.get("burn", 0) > 0:    parts.append("🔥[%d]" % effects["burn"])
+	if effects.get("poison", 0) > 0:  parts.append("☠[%d]" % effects["poison"])
+	if effects.get("freeze", 0) > 0:  parts.append("❄")
+	if effects.get("haste", 0) > 0:   parts.append("⚡+")
+	if effects.get("blessed", 0) > 0: parts.append("✨")
+	_status_label.text = " ".join(parts)
+	_status_label.visible = parts.size() > 0

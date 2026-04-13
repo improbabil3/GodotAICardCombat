@@ -12,6 +12,8 @@ var is_playable: bool = true
 # Se false, i dettagli delle carte non sono visibili
 var show_card_details: bool = true
 
+var _status_label: Label = null
+
 @onready var _image: TextureRect = $VBox/ImageArea
 @onready var _name_label: Label = $VBox/NameLabel
 @onready var _damage_label: Label = $VBox/EffectsBox/DamageLabel
@@ -32,6 +34,11 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
+	# Etichetta dinamica per simbolo status effect
+	_status_label = Label.new()
+	_status_label.add_theme_font_size_override("font_size", 9)
+	_status_label.visible = false
+	$VBox/EffectsBox.add_child(_status_label)
 
 func _refresh_visuals() -> void:
 	if card_data == null:
@@ -43,6 +50,8 @@ func _refresh_visuals() -> void:
 		_shield_label.visible = false
 		_heal_label.visible = false
 		_energy_label.visible = false
+		if _status_label != null:
+			_status_label.visible = false
 		_image.texture = _get_card_back_texture()
 		_update_playable_state()
 		return
@@ -64,6 +73,16 @@ func _refresh_visuals() -> void:
 	if card_data.heal > 0:
 		_heal_label.text = "💚 GUA +%d" % card_data.heal
 
+	# Status effect symbol
+	if _status_label != null:
+		if card_data.status_effect != "":
+			var symbol := _status_symbol(card_data.status_effect)
+			var tgt_str := "→sé" if card_data.status_target == "self" else "→op"
+			_status_label.text = "%s%s" % [symbol, tgt_str]
+			_status_label.visible = show_card_details
+		else:
+			_status_label.visible = false
+
 	# Immagine carta
 	var img_path := "res://assets/images/cards/%s.png" % card_data.image_key
 	if ResourceLoader.exists(img_path):
@@ -73,6 +92,16 @@ func _refresh_visuals() -> void:
 		_image.texture = _get_placeholder_texture()
 
 	_update_playable_state()
+
+## Mappa nome effetto di stato → simbolo emoji
+func _status_symbol(effect: String) -> String:
+	match effect:
+		"burn":    return "🔥"
+		"poison":  return "☠"
+		"freeze":  return "❄"
+		"haste":   return "⚡"
+		"blessed": return "✨"
+	return "?"
 
 func _update_playable_state() -> void:
 	modulate = Color.WHITE if is_playable else Color(0.4, 0.4, 0.4, 0.8)

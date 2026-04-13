@@ -82,9 +82,13 @@ func _resolve_player_attack(player: ActorData, enemy: ActorData) -> bool:
 			enemy.actor_name, dg, before, enemy.hp
 		])
 		if not enemy.is_alive():
-			DebugLogger.log_resolution("☠ %s ha 0 HP — VITTORIA del giocatore!" % enemy.actor_name)
-			game_over.emit(true)
-			return false
+			if enemy.has_status("blessed"):
+				enemy.hp = 1
+				DebugLogger.log_heal("%s: benedizione impedisce la sconfitta (HP → 1)" % enemy.actor_name)
+			else:
+				DebugLogger.log_resolution("☠ %s ha 0 HP — VITTORIA del giocatore!" % enemy.actor_name)
+				game_over.emit(true)
+				return false
 	else:
 		DebugLogger.log_shield("%s: attacco neutralizzato dallo scudo (SCU:%d ≥ DAN:%d)" % [
 			enemy.actor_name, enemy_shield, raw_damage
@@ -110,9 +114,13 @@ func _resolve_enemy_attack(player: ActorData, enemy: ActorData) -> bool:
 			player.actor_name, dn, before, player.hp
 		])
 		if not player.is_alive():
-			DebugLogger.log_resolution("☠ %s ha 0 HP — SCONFITTA!" % player.actor_name)
-			game_over.emit(false)
-			return false
+			if player.has_status("blessed"):
+				player.hp = 1
+				DebugLogger.log_heal("%s: benedizione impedisce la sconfitta (HP → 1)" % player.actor_name)
+			else:
+				DebugLogger.log_resolution("☠ %s ha 0 HP — SCONFITTA!" % player.actor_name)
+				game_over.emit(false)
+				return false
 	else:
 		DebugLogger.log_shield("%s: attacco neutralizzato dallo scudo (SCU:%d ≥ DAN:%d)" % [
 			player.actor_name, player_shield, raw_damage

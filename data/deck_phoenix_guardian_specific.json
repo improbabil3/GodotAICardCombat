@@ -1,9 +1,9 @@
 {
 	"deck_name": "Phoenix Guardian Specific",  "cards": [
-    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Phoenix Strike",  "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Guardian's Blessing", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "swift_strike", "status_effect": "blessed", "status_target": "self" },
+    { "name": "Guardian's Blessing", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "swift_strike", "status_effect": "blessed", "status_target": "self" },
+    { "name": "Guardian's Blessing", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "swift_strike", "status_effect": "blessed", "status_target": "self" },
+    { "name": "Guardian's Blessing", "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "swift_strike", "status_effect": "blessed", "status_target": "self" },
     { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
     { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },
     { "name": "Solar Strike",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "solar_strike"    },

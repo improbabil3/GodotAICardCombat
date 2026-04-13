@@ -161,14 +161,42 @@ class Game:
         history: list[TurnSnapshot] = []
 
         for turn in range(1, MAX_TURNS + 1):
-            player.reset_for_turn()
-            enemy.reset_for_turn()
+            # ── STATUS_START: POISON damage (enemy first) ──────────────────
+            game_over = _apply_poison_damage(player, enemy)
+            if game_over is not None:
+                return GameResult(
+                    winner=game_over,
+                    turns=turn,
+                    player_hp_final=player.hp,
+                    enemy_hp_final=enemy.hp,
+                    hp_history=history,
+                )
 
-            player.draw_cards(CARDS_PER_DRAW)
+            # ── ENEMY_DRAW: reset intents, apply FREEZE/HASTE, draw cards ─
+            enemy.intent_damage = 0
+            enemy.intent_shield = 0
+            enemy.intent_heal = 0
+            enemy.energy = enemy.max_energy
+            _apply_freeze_haste(enemy)
             enemy.draw_cards(CARDS_PER_DRAW)
 
-            self._ai.play_turn(player)
-            self._ai.play_turn(enemy)
+            # ── ENEMY_PLAY: AI plays cards, applies status effects ─────────
+            played_by_enemy = self._ai.play_turn(enemy)
+            for card in played_by_enemy:
+                _apply_card_status(card, caster=enemy, opponent=player)
+
+            # ── PLAYER_DRAW: reset intents, apply FREEZE/HASTE, draw cards ─
+            player.intent_damage = 0
+            player.intent_shield = 0
+            player.intent_heal = 0
+            player.energy = player.max_energy
+            _apply_freeze_haste(player)
+            player.draw_cards(CARDS_PER_DRAW)
+
+            # ── PLAYER_PLAY: AI plays cards, applies status effects ────────
+            played_by_player = self._ai.play_turn(player)
+            for card in played_by_player:
+                _apply_card_status(card, caster=player, opponent=enemy)
 
             if self._record_history:
                 history.append(
@@ -181,6 +209,7 @@ class Game:
                     )
                 )
 
+            # ── RESOLUTION ─────────────────────────────────────────────────
             result = self._resolver.resolve(player, enemy)
             if not result.continues:
                 winner = "player" if result.player_won else "enemy"
@@ -192,6 +221,19 @@ class Game:
                     hp_history=history,
                 )
 
+            # ── TURN_END: BURN damage, then BLESSED, then ready next turn ──
+            game_over = _apply_burn_damage(player, enemy)
+            if game_over is not None:
+                return GameResult(
+                    winner=game_over,
+                    turns=turn,
+                    player_hp_final=player.hp,
+                    enemy_hp_final=enemy.hp,
+                    hp_history=history,
+                )
+            _apply_blessed_effects(player)
+            _apply_blessed_effects(enemy)
+
         return GameResult(
             winner="stalemate",
             turns=MAX_TURNS,
@@ -199,6 +241,87 @@ class Game:
             enemy_hp_final=enemy.hp,
             hp_history=history,
         )
+
+
+# ── Status effect helpers (mirrors TurnManager logic) ────────────────────
+
+def _apply_freeze_haste(actor: "Actor") -> None:
+    """Apply FREEZE (-1 energy) or HASTE (+1 energy) at the start of actor's draw phase."""
+    if actor.has_status("freeze"):
+        actor.energy = max(0, actor.energy - 1)
+        actor.clear_status("freeze")
+    if actor.has_status("haste"):
+        actor.energy += 1  # intentionally can exceed max
+        actor.clear_status("haste")
+
+
+def _apply_card_status(card: "Card", caster: "Actor", opponent: "Actor") -> None:
+    """Apply status effect from a played card to the correct target."""
+    if not card.status_effect:
+        return
+    target = opponent if card.status_target == "opponent" else caster
+    target.apply_status(card.status_effect)
+
+
+def _apply_poison_damage(player: "Actor", enemy: "Actor") -> "str | None":
+    """
+    Apply poison at turn start. Enemy first, then player.
+    Returns winner string if a death occurs, else None.
+    """
+    if enemy.has_status("poison"):
+        enemy.status_effects["poison"] -= 1
+        if enemy.has_status("blessed"):
+            enemy.hp = max(1, enemy.hp - 1)
+        else:
+            enemy.take_damage(1)
+            if not enemy.is_alive():
+                return "player"
+
+    if player.has_status("poison"):
+        player.status_effects["poison"] -= 1
+        if player.has_status("blessed"):
+            player.hp = max(1, player.hp - 1)
+        else:
+            player.take_damage(1)
+            if not player.is_alive():
+                return "enemy"
+
+    return None
+
+
+def _apply_burn_damage(player: "Actor", enemy: "Actor") -> "str | None":
+    """
+    Apply burn at turn end. Enemy first, then player.
+    Returns winner string if a death occurs, else None.
+    """
+    if enemy.has_status("burn"):
+        enemy.status_effects["burn"] -= 1
+        if enemy.has_status("blessed"):
+            enemy.hp = max(1, enemy.hp - 1)
+        else:
+            enemy.take_damage(1)
+            if not enemy.is_alive():
+                return "player"
+
+    if player.has_status("burn"):
+        player.status_effects["burn"] -= 1
+        if player.has_status("blessed"):
+            player.hp = max(1, player.hp - 1)
+        else:
+            player.take_damage(1)
+            if not player.is_alive():
+                return "enemy"
+
+    return None
+
+
+def _apply_blessed_effects(actor: "Actor") -> None:
+    """Apply blessed: +1 HP, cure burn/poison, remove blessed."""
+    if actor.has_status("blessed"):
+        actor.heal_hp(1)
+        actor.clear_status("burn")
+        actor.clear_status("poison")
+        actor.clear_status("blessed")
 
 
 # ── Multi-encounter run ───────────────────────────────────────────────────

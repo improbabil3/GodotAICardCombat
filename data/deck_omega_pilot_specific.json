@@ -1,9 +1,9 @@
 {
 	"deck_name": "Omega Pilot Specific",  "cards": [
-    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
-    { "name": "Swift Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike"    },
+    { "name": "Afterburner",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike",  "status_effect": "haste",  "status_target": "self" },
+    { "name": "Afterburner",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike",  "status_effect": "haste",  "status_target": "self" },
+    { "name": "Afterburner",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike",  "status_effect": "haste",  "status_target": "self" },
+    { "name": "Afterburner",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "swift_strike",  "status_effect": "haste",  "status_target": "self" },
     { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
     { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },
     { "name": "Overdrive Pulse", "damage": 3, "shield": 0, "heal": 0, "energy": 1, "image": "overdrive_pulse" },

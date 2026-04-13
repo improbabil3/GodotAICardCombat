@@ -7,9 +7,9 @@
     { "name": "Null Cannon",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "null_cannon" },
     { "name": "Null Cannon",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "null_cannon" },
     { "name": "Null Cannon",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "null_cannon" },
-    { "name": "Dark Surge",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge" },
-    { "name": "Dark Surge",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge" },
-    { "name": "Dark Surge",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge" },
+    { "name": "Void Inferno",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge",   "status_effect": "burn",   "status_target": "opponent" },
+    { "name": "Void Inferno",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge",   "status_effect": "burn",   "status_target": "opponent" },
+    { "name": "Void Inferno",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge",   "status_effect": "burn",   "status_target": "opponent" },
     { "name": "Void Aegis",      "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "void_aegis" },
     { "name": "Void Aegis",      "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "void_aegis" },
     { "name": "Oblivion Strike", "damage": 3, "shield": 1, "heal": 0, "energy": 2, "image": "oblivion_strike" },
@@ -18,7 +18,7 @@
     { "name": "Null Pulse",      "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "null_pulse_v" },
     { "name": "Abyss Claw",      "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "abyss_claw" },
     { "name": "Abyss Claw",      "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "abyss_claw" },
-    { "name": "Dark Surge",      "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge" },
+    { "name": "Void Inferno",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "dark_surge",   "status_effect": "burn",   "status_target": "opponent" },
     { "name": "Void Rend",       "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "void_rend" },
     { "name": "Null Cannon",     "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "null_cannon" }
   ]

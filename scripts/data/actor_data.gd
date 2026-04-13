@@ -33,6 +33,16 @@ var graveyard: Array[CardData] = []
 ## Intenti del turno corrente (accumulati mentre gioca le carte)
 var current_intents: Dictionary = {"damage": 0, "shield": 0, "heal": 0}
 
+## Effetti di stato attivi. Valore = turni rimanenti (0 = inattivo).
+## Burn: 3 turni | Poison: 2 turni | Freeze: 1 turno | Haste: 1 turno | Blessed: 1 turno
+var status_effects: Dictionary = {
+	"burn": 0,
+	"poison": 0,
+	"freeze": 0,
+	"haste": 0,
+	"blessed": 0
+}
+
 func _init(p_name: String, p_hp: int, p_energy: int) -> void:
 	actor_name = p_name
 	hp = p_hp
@@ -79,8 +89,41 @@ func can_play(card: CardData) -> bool:
 
 ## Stato sintetico per debug
 func debug_state() -> String:
-	return "%s — HP: %d/%d | ENE: %d/%d | Mazzo: %d | Mano: %d | Cimitero: %d | Intenti: DAN%d SCU%d GUA%d" % [
+	return "%s — HP: %d/%d | ENE: %d/%d | Mazzo: %d | Mano: %d | Cimitero: %d | Intenti: DAN%d SCU%d GUA%d | Status: %s" % [
 		actor_name, hp, max_hp, energy, max_energy,
 		deck.size(), hand.size(), graveyard.size(),
-		current_intents["damage"], current_intents["shield"], current_intents["heal"]
+		current_intents["damage"], current_intents["shield"], current_intents["heal"],
+		_status_summary()
 	]
+
+# ── Effetti di stato ─────────────────────────────────────────────────────────
+
+## Applica un effetto di stato. Se già attivo, resetta il contatore.
+func apply_status(effect: String) -> void:
+	match effect:
+		"burn":    status_effects["burn"]    = 3
+		"poison":  status_effects["poison"]  = 2
+		"freeze":  status_effects["freeze"]  = 1
+		"haste":   status_effects["haste"]   = 1
+		"blessed": status_effects["blessed"] = 1
+		_:
+			DebugLogger.log_error("ActorData: effetto stato sconosciuto '%s'" % effect)
+
+## Ritorna true se l'effetto di stato è attivo (turni > 0)
+func has_status(effect: String) -> bool:
+	return status_effects.get(effect, 0) > 0
+
+## Rimuove (azzera) un effetto di stato
+func clear_status(effect: String) -> void:
+	if status_effects.has(effect):
+		status_effects[effect] = 0
+
+## Stringa riassuntiva degli effetti attivi (per debug)
+func _status_summary() -> String:
+	var parts: Array[String] = []
+	if status_effects["burn"]    > 0: parts.append("BURN[%d]" % status_effects["burn"])
+	if status_effects["poison"]  > 0: parts.append("POISON[%d]" % status_effects["poison"])
+	if status_effects["freeze"]  > 0: parts.append("FREEZE")
+	if status_effects["haste"]   > 0: parts.append("HASTE")
+	if status_effects["blessed"] > 0: parts.append("BLESSED")
+	return " ".join(parts) if parts.size() > 0 else "nessuno"

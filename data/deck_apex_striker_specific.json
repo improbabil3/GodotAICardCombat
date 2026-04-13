@@ -1,9 +1,9 @@
 {
 	"deck_name": "Apex Striker Specific",  "cards": [
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Ignition Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "burn",  "status_target": "opponent" },
+    { "name": "Ignition Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "burn",  "status_target": "opponent" },
+    { "name": "Ignition Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "burn",  "status_target": "opponent" },
+    { "name": "Ignition Strike", "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "burn",  "status_target": "opponent" },
     { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
     { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },
     { "name": "Quantum Strike",  "damage": 4, "shield": 0, "heal": 0, "energy": 1, "image": "quantum_strike"  },

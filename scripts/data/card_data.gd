@@ -24,8 +24,24 @@ extends Resource
 ## Chiave immagine (usata per caricare l'asset in assets/images/cards/)
 @export var image_key: String = "default"
 
+## Effetto di stato applicato dalla carta (es. "burn", "poison", "freeze", "haste", "blessed")
+## Stringa vuota = nessun effetto di stato
+@export var status_effect: String = ""
+
+## Bersaglio dell'effetto di stato: "self" (chi gioca) o "opponent" (avversario)
+@export var status_target: String = ""
+
 ## Costruttore di convenienza usato da DeckLoader
-static func create(p_name: String, p_damage: int, p_shield: int, p_heal: int, p_energy: int, p_image: String) -> CardData:
+static func create(
+	p_name: String,
+	p_damage: int,
+	p_shield: int,
+	p_heal: int,
+	p_energy: int,
+	p_image: String,
+	p_status: String = "",
+	p_target: String = ""
+) -> CardData:
 	var c := CardData.new()
 	c.card_name = p_name
 	c.damage = p_damage
@@ -33,6 +49,8 @@ static func create(p_name: String, p_damage: int, p_shield: int, p_heal: int, p_
 	c.heal = p_heal
 	c.energy_cost = p_energy
 	c.image_key = p_image
+	c.status_effect = p_status
+	c.status_target = p_target
 	return c
 
 ## Ritorna true se la carta ha almeno un effetto attivo
@@ -53,4 +71,11 @@ func describe() -> String:
 	if damage > 0: parts.append("DAN +%d" % damage)
 	if shield > 0: parts.append("SCU +%d" % shield)
 	if heal > 0: parts.append("GUA +%d" % heal)
+	if status_effect != "":
+		var tgt := "→se" if status_target == "self" else "→op"
+		parts.append("STATO:%s%s" % [status_effect.to_upper(), tgt])
 	return "%s [ENE:%d] — %s" % [card_name, energy_cost, " | ".join(parts)]
+
+## Ritorna true se la carta applica un effetto di stato
+func has_status_effect() -> bool:
+	return status_effect != ""

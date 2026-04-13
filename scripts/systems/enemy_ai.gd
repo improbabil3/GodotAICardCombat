@@ -80,10 +80,12 @@ func _priority(card: CardData, survival_mode: bool) -> float:
 	var shield_val := float(card.shield)
 	var heal_val   := float(card.heal)
 	var cost_penalty := float(card.energy_cost) * 0.1  # Leggero malus per alto costo
+	# Bonus per carte con effetto di stato: priorità leggermente elevata
+	var status_bonus := 1.5 if card.status_effect != "" else 0.0
 
 	if survival_mode:
 		# Guarigione → scudo → danno
-		return (heal_val * 3.0) + (shield_val * 2.0) + damage_val - cost_penalty
+		return (heal_val * 3.0) + (shield_val * 2.0) + damage_val + status_bonus - cost_penalty
 	else:
 		# Danno → danno+scudo → scudo → guarigione
-		return (damage_val * 3.0) + (shield_val * 1.5) + (heal_val * 0.5) - cost_penalty
+		return (damage_val * 3.0) + (shield_val * 1.5) + (heal_val * 0.5) + status_bonus - cost_penalty

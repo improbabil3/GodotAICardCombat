@@ -32,13 +32,19 @@ class CombatResolver:
         if net_to_enemy > 0:
             enemy.take_damage(net_to_enemy)
         if not enemy.is_alive():
-            return CombatResult(continues=False, player_won=True)
+            if enemy.has_status("blessed"):
+                enemy.hp = 1  # Blessed: survive with 1 HP
+            else:
+                return CombatResult(continues=False, player_won=True)
 
         # ── Phase 3: Enemy → Player ───────────────────────────────────────
         net_to_player = enemy.intent_damage - player.intent_shield
         if net_to_player > 0:
             player.take_damage(net_to_player)
         if not player.is_alive():
-            return CombatResult(continues=False, player_won=False)
+            if player.has_status("blessed"):
+                player.hp = 1  # Blessed: survive with 1 HP
+            else:
+                return CombatResult(continues=False, player_won=False)
 
         return CombatResult(continues=True, player_won=False)

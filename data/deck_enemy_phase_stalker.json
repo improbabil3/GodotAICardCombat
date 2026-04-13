@@ -7,8 +7,8 @@
     { "name": "Shadow Step",    "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shadow_step" },
     { "name": "Shadow Step",    "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shadow_step" },
     { "name": "Shadow Step",    "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shadow_step" },
-    { "name": "Blink Strike",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike" },
-    { "name": "Blink Strike",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike" },
+    { "name": "Phantom Venom",  "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "poison", "status_target": "opponent" },
+    { "name": "Phantom Venom",  "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "poison", "status_target": "opponent" },
     { "name": "Phase Riposte",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "phase_riposte" },
     { "name": "Phase Riposte",  "damage": 2, "shield": 1, "heal": 0, "energy": 2, "image": "phase_riposte" },
     { "name": "Feint",          "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "feint" },
@@ -17,9 +17,9 @@
     { "name": "Phase Drain",    "damage": 1, "shield": 0, "heal": 1, "energy": 1, "image": "phase_drain" },
     { "name": "Ghost Slash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "ghost_slash" },
     { "name": "Ghost Slash",    "damage": 3, "shield": 0, "heal": 0, "energy": 2, "image": "ghost_slash" },
-    { "name": "Blink Strike",   "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike" },
+    { "name": "Phantom Venom",  "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "poison", "status_target": "opponent" },
     { "name": "Shadow Step",    "damage": 1, "shield": 1, "heal": 0, "energy": 1, "image": "shadow_step" },
     { "name": "Phase Cut",      "damage": 2, "shield": 0, "heal": 0, "energy": 1, "image": "phase_cut" },
-    { "name": "Feint",          "damage": 0, "shield": 2, "heal": 0, "energy": 1, "image": "feint" }
+    { "name": "Phantom Venom",  "damage": 1, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike", "status_effect": "poison", "status_target": "opponent" }
   ]
 }

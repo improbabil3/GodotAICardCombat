@@ -1,9 +1,9 @@
 {
 	"deck_name": "Void Walker Specific",  "cards": [
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
-    { "name": "Blink Strike",    "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike"    },
+    { "name": "Venom Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike",  "status_effect": "poison", "status_target": "opponent" },
+    { "name": "Venom Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike",  "status_effect": "poison", "status_target": "opponent" },
+    { "name": "Venom Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike",  "status_effect": "poison", "status_target": "opponent" },
+    { "name": "Venom Slash",     "damage": 2, "shield": 0, "heal": 0, "energy": 0, "image": "blink_strike",  "status_effect": "poison", "status_target": "opponent" },
     { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
     { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },
     { "name": "Shadow Leech",    "damage": 2, "shield": 0, "heal": 1, "energy": 1, "image": "shadow_leech"    },

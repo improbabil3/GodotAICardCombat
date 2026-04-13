@@ -112,6 +112,25 @@ func animate_healed(panel: ActorPanelUI) -> void:
 func animate_shield_activated(panel: ActorPanelUI) -> void:
 	panel.flash(Color(0.3, 0.5, 1.8, 1))
 
+## Flash arancione per danno da stato (burn/poison).
+func animate_status_damage(panel: ActorPanelUI, effect_name: String) -> void:
+	var color: Color
+	match effect_name:
+		"burn":   color = Color(1.5, 0.5, 0.1, 1)   # arancione fuoco
+		"poison": color = Color(0.5, 1.2, 0.2, 1)   # verde veleno
+		_:        color = Color(1.2, 0.8, 0.2, 1)   # giallo generico
+	panel.flash(color)
+	panel.shake()
+
+## Flash per modifica energia da stato (freeze/haste).
+func animate_status_energy_changed(panel: ActorPanelUI, effect_name: String) -> void:
+	var color: Color
+	match effect_name:
+		"freeze": color = Color(0.3, 0.8, 1.5, 1)   # azzurro ghiaccio
+		"haste":  color = Color(1.2, 1.0, 0.1, 1)   # giallo elettrico
+		_:        color = Color(0.8, 0.8, 0.8, 1)
+	panel.flash(color)
+
 # ── HP Bar ───────────────────────────────────────────────────────────────────
 
 ## Tween fluido sulla ProgressBar HP.

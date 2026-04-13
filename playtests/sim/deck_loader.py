@@ -24,6 +24,8 @@ def load_deck(filename: str) -> list[Card]:
                 shield=int(entry.get("shield", 0)),
                 heal=int(entry.get("heal", 0)),
                 energy_cost=int(entry.get("energy", 0)),
+                status_effect=str(entry.get("status_effect", "")),
+                status_target=str(entry.get("status_target", "")),
             )
         )
     return cards
