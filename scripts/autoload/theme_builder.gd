@@ -58,7 +58,78 @@ static func build() -> Theme:
 	panel_style.border_color = Color(0.15, 0.25, 0.55, 1)
 	panel_style.set_border_width_all(1)
 	panel_style.set_corner_radius_all(4)
+	panel_style.content_margin_left = 8
+	panel_style.content_margin_top = 8
+	panel_style.content_margin_right = 8
+	panel_style.content_margin_bottom = 8
 	theme.set_stylebox("panel", "PanelContainer", panel_style)
+
+	var screen_panel := StyleBoxFlat.new()
+	screen_panel.bg_color = Color(0.05, 0.08, 0.16, 0.92)
+	screen_panel.border_color = Color(0.24, 0.52, 0.88, 1)
+	screen_panel.set_border_width_all(2)
+	screen_panel.set_corner_radius_all(10)
+	screen_panel.content_margin_left = 10
+	screen_panel.content_margin_top = 10
+	screen_panel.content_margin_right = 10
+	screen_panel.content_margin_bottom = 10
+	screen_panel.shadow_color = Color(0.01, 0.02, 0.05, 0.55)
+	screen_panel.shadow_size = 8
+	theme.set_stylebox("panel", "ScreenPanel", screen_panel)
+
+	var portrait_panel := StyleBoxFlat.new()
+	portrait_panel.bg_color = Color(0.08, 0.11, 0.20, 0.96)
+	portrait_panel.border_color = Color(0.40, 0.78, 1.0, 0.95)
+	portrait_panel.set_border_width_all(2)
+	portrait_panel.set_corner_radius_all(12)
+	portrait_panel.content_margin_left = 8
+	portrait_panel.content_margin_top = 8
+	portrait_panel.content_margin_right = 8
+	portrait_panel.content_margin_bottom = 8
+	portrait_panel.shadow_color = Color(0.02, 0.04, 0.10, 0.48)
+	portrait_panel.shadow_size = 7
+	theme.set_stylebox("panel", "PortraitPanel", portrait_panel)
+
+	var hud_panel := StyleBoxFlat.new()
+	hud_panel.bg_color = Color(0.04, 0.07, 0.14, 0.94)
+	hud_panel.border_color = Color(0.22, 0.48, 0.82, 0.92)
+	hud_panel.set_border_width_all(2)
+	hud_panel.set_corner_radius_all(8)
+	hud_panel.content_margin_left = 6
+	hud_panel.content_margin_top = 6
+	hud_panel.content_margin_right = 6
+	hud_panel.content_margin_bottom = 6
+	hud_panel.shadow_color = Color(0.01, 0.02, 0.06, 0.42)
+	hud_panel.shadow_size = 6
+	theme.set_stylebox("panel", "HudPanel", hud_panel)
+
+	var pile_panel := StyleBoxFlat.new()
+	pile_panel.bg_color = Color(0.06, 0.09, 0.17, 0.96)
+	pile_panel.border_color = Color(0.30, 0.66, 0.96, 0.92)
+	pile_panel.set_border_width_all(2)
+	pile_panel.set_corner_radius_all(10)
+	pile_panel.content_margin_left = 4
+	pile_panel.content_margin_top = 4
+	pile_panel.content_margin_right = 4
+	pile_panel.content_margin_bottom = 4
+	pile_panel.shadow_color = Color(0.01, 0.02, 0.06, 0.36)
+	pile_panel.shadow_size = 5
+	theme.set_stylebox("panel", "PilePanel", pile_panel)
+
+	var card_style := StyleBoxFlat.new()
+	card_style.bg_color = Color(0.07, 0.09, 0.18, 1)
+	card_style.border_color = Color(0.24, 0.56, 0.92, 1)
+	card_style.set_border_width_all(2)
+	card_style.set_corner_radius_all(8)
+	card_style.shadow_color = Color(0.01, 0.02, 0.06, 0.45)
+	card_style.shadow_size = 6
+	theme.set_stylebox("panel", "CardUI", card_style)
+
+	var separator_style := StyleBoxLine.new()
+	separator_style.color = Color(0.28, 0.52, 0.84, 0.55)
+	separator_style.thickness = 2
+	theme.set_stylebox("separator", "HSeparator", separator_style)
+	theme.set_stylebox("separator", "VSeparator", separator_style)
 
 	# --- ProgressBar ---
 	var pb_bg := StyleBoxFlat.new()

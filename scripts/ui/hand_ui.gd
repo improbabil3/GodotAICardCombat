@@ -7,8 +7,11 @@ class_name HandUI
 extends HBoxContainer
 
 signal card_played_from_hand(card: CardData)
+signal card_secondary_clicked_in_hand(card: CardData)
 signal card_hovered_in_hand(card: CardData)
 signal card_unhovered_in_hand(card: CardData)
+signal card_long_pressed_in_hand(card: CardData)
+signal card_long_press_released_in_hand(card: CardData)
 
 ## Se false, le carte non sono cliccabili (mano nemico, o fuori turno)
 var interactive: bool = false
@@ -18,6 +21,9 @@ var show_card_details: bool = true
 
 ## Riferimento all'attore proprietario (per sapere energia disponibile)
 var actor: ActorData = null
+
+## Dimensione visuale delle carte nella mano
+var card_size: Vector2 = Vector2(176, 236)
 
 ## Mappa CardData → CardUI node
 var _card_ui_map: Dictionary = {}
@@ -31,30 +37,34 @@ func _ready() -> void:
 
 ## Aggiorna la visualizzazione della mano con le carte fornite
 func refresh_hand(cards: Array[CardData], current_energy: int) -> void:
-	# Rimuove card UI non più presenti
-	var to_remove: Array = []
-	for card_data in _card_ui_map.keys():
-		if not cards.has(card_data):
-			to_remove.append(card_data)
-	for card_data in to_remove:
-		var node: CardUI = _card_ui_map[card_data]
-		node.queue_free()
-		_card_ui_map.erase(card_data)
+	clear_hand()
 
-	# Aggiunge nuove card UI
+	# Ricrea l'intera mano per evitare transform/layout sporchi dopo le animazioni.
 	for card_data in cards:
-		if not _card_ui_map.has(card_data):
-			var card_ui: CardUI = CARD_SCENE.instantiate()
-			add_child(card_ui)
-			card_ui.show_card_details = show_card_details
-			card_ui.setup(card_data as CardData)
-			_card_ui_map[card_data] = card_ui
-			card_ui.card_clicked.connect(_on_card_clicked)
-			card_ui.card_hovered.connect(func(c): card_hovered_in_hand.emit(c))
-			card_ui.card_unhovered.connect(func(c): card_unhovered_in_hand.emit(c))
+		var card_ui: CardUI = CARD_SCENE.instantiate()
+		add_child(card_ui)
+		card_ui.show_card_details = show_card_details
+		card_ui.setup(card_data as CardData)
+		card_ui.apply_layout(card_size)
+		_card_ui_map[card_data] = card_ui
+		card_ui.card_clicked.connect(_on_card_clicked)
+		card_ui.card_secondary_clicked.connect(func(c): card_secondary_clicked_in_hand.emit(c))
+		card_ui.card_hovered.connect(func(c): card_hovered_in_hand.emit(c))
+		card_ui.card_unhovered.connect(func(c): card_unhovered_in_hand.emit(c))
+		card_ui.card_long_pressed.connect(func(c): card_long_pressed_in_hand.emit(c))
+		card_ui.card_long_press_released.connect(func(c): card_long_press_released_in_hand.emit(c))
 
 	# Aggiorna lo stato giocabile di tutte le carte
 	update_playable_states(current_energy)
+	for card_ui in _card_ui_map.values():
+		(card_ui as CardUI).apply_layout(card_size)
+	queue_sort()
+
+
+func set_card_size(new_size: Vector2) -> void:
+	card_size = new_size
+	for card_ui in _card_ui_map.values():
+		(card_ui as CardUI).apply_layout(card_size)
 
 ## Aggiorna quale carta è giocabile in base all'energia disponibile
 func update_playable_states(current_energy: int) -> void:

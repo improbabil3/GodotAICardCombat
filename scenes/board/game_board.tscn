@@ -1,90 +1,104 @@
-[gd_scene load_steps=5 format=3 uid="uid://game_board"]
+[gd_scene format=3 uid="uid://bygbmmpdskak0"]
 
 [ext_resource type="PackedScene" path="res://scenes/board/actor_panel.tscn" id="1_actor_panel"]
 [ext_resource type="PackedScene" path="res://scenes/board/hand_area.tscn" id="2_hand_area"]
-[ext_resource type="PackedScene" path="res://scenes/board/intent_panel.tscn" id="3_intent_panel"]
-[ext_resource type="Script" path="res://scripts/screens/game_screen.gd" id="4_game_screen"]
+[ext_resource type="PackedScene" uid="uid://8hstxx5j1kr5" path="res://scenes/board/intent_panel.tscn" id="3_intent_panel"]
+[ext_resource type="Script" uid="uid://c0f8p732hu52y" path="res://scripts/screens/game_screen.gd" id="4_game_screen"]
+[ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="5_backdrop"]
 
-[node name="GameBoard" type="VBoxContainer"]
-layout_mode = 1
+[node name="GameBoard" type="VBoxContainer" unique_id=2035644688]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_constants/separation = 4
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
 script = ExtResource("4_game_screen")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
+[node name="Background" type="Control" parent="." unique_id=1172120455]
 z_index = -1
+top_level = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.05, 0.06, 0.12, 1)
 mouse_filter = 2
+script = ExtResource("5_backdrop")
+variant = 1
 
-[node name="TurnLabel" type="Label" parent="."]
-layout_mode = 2
-text = "Turno 1"
-horizontal_alignment = 1
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.5, 0.6, 0.8, 0.8)
-
-[node name="EnemyPanel" type="Node2D" parent="."]
+[node name="TopMargin" type="Control" parent="." unique_id=1325011018]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="ActorPanel" type="Node2D" parent="EnemyPanel"]
+[node name="EnemyPanel" type="Node2D" parent="." unique_id=470180939]
 
-[node name="EnemyPanel_instance" parent="." instance=ExtResource("1_actor_panel")]
+[node name="ActorPanel" type="Node2D" parent="EnemyPanel" unique_id=257942182]
+
+[node name="EnemyPanel_instance" parent="." unique_id=1370308980 instance=ExtResource("1_actor_panel")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="EnemyHandArea" parent="." instance=ExtResource("2_hand_area")]
+[node name="EnemyHandArea" parent="." unique_id=1028078714 instance=ExtResource("2_hand_area")]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="IntentPanel" parent="." instance=ExtResource("3_intent_panel")]
+[node name="IntentPanel" parent="." unique_id=1637093860 instance=ExtResource("3_intent_panel")]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 1
 
-[node name="PlayerHandArea" parent="." instance=ExtResource("2_hand_area")]
+[node name="PlayerHandArea" parent="." unique_id=181715227 instance=ExtResource("2_hand_area")]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="PlayerPanel_instance" parent="." instance=ExtResource("1_actor_panel")]
+[node name="PlayerPanel_instance" parent="." unique_id=1546525313 instance=ExtResource("1_actor_panel")]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="CardTooltip" type="PanelContainer" parent="."]
+[node name="CardTooltip" type="PanelContainer" parent="." unique_id=131450706]
 visible = false
 z_index = 100
-custom_minimum_size = Vector2(160, 0)
-size_flags_horizontal = 0
+custom_minimum_size = Vector2(160, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"HudPanel"
 
-[node name="TooltipVBox" type="VBoxContainer" parent="CardTooltip"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -8.0
+[node name="TooltipVBox" type="VBoxContainer" parent="CardTooltip" unique_id=943568439]
+layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="TooltipName" type="Label" parent="CardTooltip/TooltipVBox"]
+[node name="TooltipName" type="Label" parent="CardTooltip/TooltipVBox" unique_id=878073121]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Card Name"
-theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="TooltipEffects" type="Label" parent="CardTooltip/TooltipVBox"]
+[node name="TooltipEffects" type="Label" parent="CardTooltip/TooltipVBox" unique_id=1732325209]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Effects"
-theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="TooltipEnergy" type="Label" parent="CardTooltip/TooltipVBox"]
+[node name="TooltipEnergy" type="Label" parent="CardTooltip/TooltipVBox" unique_id=480637861]
 layout_mode = 2
-text = "ENE: 0"
-theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "ENE: 0"
+
+[node name="ActionBar" type="HBoxContainer" parent="." unique_id=1849555472]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TurnLabel" type="Label" parent="ActionBar" unique_id=121790055]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
+text = "Turno 1"
+vertical_alignment = 1
+
+[node name="EndTurnButton" type="Button" parent="ActionBar" unique_id=724117472]
+custom_minimum_size = Vector2(220, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Fine Turno ▶"

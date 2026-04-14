@@ -3,12 +3,36 @@
 class_name IntentPanelUI
 extends PanelContainer
 
+@onready var _hbox: HBoxContainer = $HBox
+@onready var _enemy_intents_box: VBoxContainer = $HBox/EnemyIntents
+@onready var _enemy_intents_label: Label = $HBox/EnemyIntentsLabel
 @onready var _enemy_damage_label: Label  = $HBox/EnemyIntents/DamageLabel
 @onready var _enemy_shield_label: Label  = $HBox/EnemyIntents/ShieldLabel
 @onready var _enemy_heal_label: Label    = $HBox/EnemyIntents/HealLabel
+@onready var _player_intents_label: Label = $HBox/PlayerIntentsLabel
+@onready var _player_intents_box: VBoxContainer = $HBox/PlayerIntents
 @onready var _player_damage_label: Label = $HBox/PlayerIntents/DamageLabel
 @onready var _player_shield_label: Label = $HBox/PlayerIntents/ShieldLabel
 @onready var _player_heal_label: Label   = $HBox/PlayerIntents/HealLabel
+
+
+func apply_layout(compact_touch_ui: bool, panel_height: float) -> void:
+	custom_minimum_size.y = panel_height
+	_hbox.add_theme_constant_override("separation", 14 if compact_touch_ui else 20)
+	_enemy_intents_box.add_theme_constant_override("separation", 6 if compact_touch_ui else 4)
+	_player_intents_box.add_theme_constant_override("separation", 6 if compact_touch_ui else 4)
+	var stat_font := 18 if compact_touch_ui else 15
+	var caption_font := 16 if compact_touch_ui else 14
+	_enemy_damage_label.add_theme_font_size_override("font_size", stat_font)
+	_enemy_shield_label.add_theme_font_size_override("font_size", stat_font)
+	_enemy_heal_label.add_theme_font_size_override("font_size", stat_font)
+	_player_damage_label.add_theme_font_size_override("font_size", stat_font)
+	_player_shield_label.add_theme_font_size_override("font_size", stat_font)
+	_player_heal_label.add_theme_font_size_override("font_size", stat_font)
+	_enemy_intents_label.add_theme_font_size_override("font_size", caption_font)
+	_player_intents_label.add_theme_font_size_override("font_size", caption_font)
+	_enemy_intents_label.text = "◀ Nemico" if compact_touch_ui else "◀ Intento Nemico"
+	_player_intents_label.text = "Giocatore ▶" if compact_touch_ui else "Intento Giocatore ▶"
 
 ## Aggiorna i contatori di entrambi gli attori
 func update_intents(player_intents: Dictionary, enemy_intents: Dictionary) -> void:

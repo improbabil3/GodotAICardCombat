@@ -1,6 +1,7 @@
-[gd_scene load_steps=1 format=3 uid="uid://dpqgh17x5wfpq70p9zff"]
+[gd_scene load_steps=2 format=3 uid="uid://dpqgh17x5wfpq70p9zff"]
 
 [ext_resource type="Script" path="res://scripts/screens/character_selection_screen.gd" id="1_w8xyd"]
+[ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="2_backdrop"]
 
 [node name="CharacterSelectionScreen" type="Control"]
 layout_mode = 1
@@ -10,42 +11,64 @@ anchors_right = 1.0
 anchors_bottom = 1.0
 script = ExtResource("1_w8xyd")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("2_backdrop")
+variant = 5
+
+[node name="CenterContainer" type="Control" parent="."]
 layout_mode = 1
 anchors_left = 0.0
 anchors_top = 0.0
 anchors_right = 1.0
 anchors_bottom = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="ContentPanel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 0
+theme_type_variation = &"ScreenPanel"
+
+[node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 24
+
+[node name="CarouselContainer" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer"]
 layout_mode = 2
 
-[node name="CarouselContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="CarouselLabel" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer"]
+[node name="CarouselLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer"]
 layout_mode = 2
 text = "Scegli il tuo personaggio"
 horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
 
-[node name="CarouselArea" type="HBoxContainer" parent="CenterContainer/VBoxContainer/CarouselContainer"]
+[node name="CarouselArea" type="HBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+custom_minimum_size = Vector2(980, 520)
 alignment = 1
+theme_override_constants/separation = 24
 
-[node name="PrevButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="PrevButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(140, 52)
 text = "< Precedente"
 
-[node name="CharacterPanel" type="PanelContainer" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="CharacterPanel" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
-custom_minimum_size = Vector2(300, 0)
-size_flags_vertical = 3
+custom_minimum_size = Vector2(560, 500)
+theme_type_variation = &"PortraitPanel"
 
-[node name="CharacterInfo" type="VBoxContainer" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel"]
+[node name="CharacterInfo" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel"]
 layout_mode = 2
 offset_left = 4.0
 offset_top = 4.0
@@ -53,31 +76,36 @@ offset_right = -4.0
 offset_bottom = -4.0
 alignment = 1
 
-[node name="CharacterImage" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterImage" type="TextureRect" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
-text = "[IMMAGINE]"
-horizontal_alignment = 1
-vertical_alignment = 1
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 220)
+expand_mode = 1
+stretch_mode = 5
 
-[node name="CharacterName" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterName" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "Phoenix Guardian"
 horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 40)
+theme_override_font_sizes/font_size = 24
 
-[node name="CharacterDescription" type="Label" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="CharacterDescription" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
 text = "Descrizione personaggio"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+custom_minimum_size = Vector2(0, 100)
 text_overrun_behavior = 2
 
-[node name="SelectButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
+[node name="SelectButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel/CharacterInfo"]
 layout_mode = 2
+custom_minimum_size = Vector2(220, 52)
 text = "Seleziona"
+theme_override_font_sizes/font_size = 18
 
-[node name="NextButton" type="Button" parent="CenterContainer/VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="NextButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(140, 52)
 text = "Successivo >"
 

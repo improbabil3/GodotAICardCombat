@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://title_screen"]
+[gd_scene load_steps=3 format=3 uid="uid://title_screen"]
 
 [ext_resource type="Script" path="res://scripts/screens/title_screen.gd" id="1_title"]
+[ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="2_backdrop"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 1
@@ -9,13 +10,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_title")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.03, 0.04, 0.10, 1)
 mouse_filter = 2
+script = ExtResource("2_backdrop")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -23,36 +24,47 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBox" type="VBoxContainer" parent="CenterContainer"]
+[node name="ContentPanel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_type_variation = &"ScreenPanel"
+
+[node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin"]
 layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 24
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="TitleLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "GALACTIC CLASH"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 52
 theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
 
-[node name="SubtitleLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "Alpha — Combat System"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.5, 0.6, 0.75, 1)
 
-[node name="Spacer" type="Control" parent="CenterContainer/VBox"]
+[node name="Spacer" type="Control" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 32)
 
-[node name="PlayButton" type="Button" parent="CenterContainer/VBox"]
+[node name="PlayButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 54)
 text = "▶  NUOVA PARTITA"
 theme_override_font_sizes/font_size = 20
 
-[node name="QuitButton" type="Button" parent="CenterContainer/VBox"]
+[node name="QuitButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 44)
 text = "Esci"

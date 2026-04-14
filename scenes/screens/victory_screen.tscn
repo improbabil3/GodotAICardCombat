@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://victory_screen"]
+[gd_scene load_steps=3 format=3 uid="uid://victory_screen"]
 
 [ext_resource type="Script" path="res://scripts/screens/victory_screen.gd" id="1_victory"]
+[ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="2_backdrop"]
 
 [node name="VictoryScreen" type="Control"]
 layout_mode = 1
@@ -9,13 +10,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_victory")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.02, 0.10, 0.04, 1)
 mouse_filter = 2
+script = ExtResource("2_backdrop")
+variant = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -23,50 +25,117 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="VBox" type="VBoxContainer" parent="CenterContainer"]
+[node name="ContentPanel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_type_variation = &"ScreenPanel"
+
+[node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin"]
 layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 24
 
-[node name="VictoryLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="VictoryLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "✦  VITTORIA  ✦"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 52
 theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
 
-[node name="SubLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="SubLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "Tutti i nemici sono stati sconfitti!"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.7, 0.9, 0.75, 1)
 
-[node name="StatsLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="PortraitRow" type="HBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="PlayerCard" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow"]
+custom_minimum_size = Vector2(190, 230)
+layout_mode = 2
+theme_type_variation = &"PortraitPanel"
+
+[node name="PlayerVBox" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/PlayerCard"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="PlayerPortrait" type="TextureRect" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/PlayerCard/PlayerVBox"]
+custom_minimum_size = Vector2(152, 152)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerName" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/PlayerCard/PlayerVBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+text = "Pilota"
+
+[node name="EnemyCard" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow"]
+custom_minimum_size = Vector2(190, 230)
+layout_mode = 2
+theme_type_variation = &"PortraitPanel"
+
+[node name="EnemyVBox" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/EnemyCard"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="EnemyPortrait" type="TextureRect" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/EnemyCard/EnemyVBox"]
+custom_minimum_size = Vector2(152, 152)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EnemyName" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox/PortraitRow/EnemyCard/EnemyVBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+text = "Boss"
+
+[node name="StatsLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "Punteggi degli scontri..."
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.6, 0.75, 0.65, 1)
 
-[node name="RatingLabel" type="Label" parent="CenterContainer/VBox"]
+[node name="RatingLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 text = "Rating: —"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 28
 theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
 
-[node name="Spacer" type="Control" parent="CenterContainer/VBox"]
+[node name="RunMetaLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.82, 0.94, 0.86, 1)
+text = "Pilota: —"
+
+[node name="Spacer" type="Control" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 28)
 
-[node name="PlayAgainButton" type="Button" parent="CenterContainer/VBox"]
+[node name="PlayAgainButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 54)
 text = "▶  NUOVA PARTITA"
 theme_override_font_sizes/font_size = 20
 
-[node name="MenuButton" type="Button" parent="CenterContainer/VBox"]
+[node name="MenuButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(280, 44)
 text = "Menu Principale"

@@ -24,8 +24,13 @@ extends VBoxContainer
 @onready var _enemy_hand_area: HBoxContainer  = $EnemyHandArea
 @onready var _player_hand_area: HBoxContainer = $PlayerHandArea
 @onready var _intent_panel: IntentPanelUI  = $IntentPanel
-@onready var _turn_label: Label            = $TurnLabel
+@onready var _top_margin: Control          = $TopMargin
+@onready var _action_bar: HBoxContainer    = $ActionBar
+@onready var _turn_label: Label            = $ActionBar/TurnLabel
+@onready var _end_turn_button: Button      = $ActionBar/EndTurnButton
+@onready var _background: Control          = $Background
 @onready var _tooltip: PanelContainer      = $CardTooltip
+@onready var _tooltip_box: VBoxContainer   = $CardTooltip/TooltipVBox
 @onready var _tooltip_name: Label          = $CardTooltip/TooltipVBox/TooltipName
 @onready var _tooltip_effects: Label       = $CardTooltip/TooltipVBox/TooltipEffects
 @onready var _tooltip_energy: Label        = $CardTooltip/TooltipVBox/TooltipEnergy
@@ -52,10 +57,17 @@ var _animating: bool = false
 # Flag per animare i pannelli HP alla prossima refresh (dopo risoluzione)
 var _animate_hp_next: bool = false
 
+# Stato tooltip
+var _tooltip_anchor_card: CardData = null
+var _tooltip_anchor_to_card: bool = false
+
 func _ready() -> void:
 	_setup_actors()
 	_setup_ui_references()
+	_setup_tooltip_overlay.call_deferred()
 	_connect_ui_signals()
+	get_viewport().size_changed.connect(_on_viewport_size_changed)
+	_apply_responsive_layout()
 	_anim_mgr = AnimationManager.new()
 	_turn_manager = TurnManager.new()
 	_turn_manager.setup(_player, _enemy)
@@ -74,6 +86,95 @@ func _ready() -> void:
 
 func _start_game() -> void:
 	_turn_manager.start()
+
+
+func _on_viewport_size_changed() -> void:
+	_apply_responsive_layout()
+
+
+func _apply_responsive_layout() -> void:
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var compact_touch_ui: bool = OS.has_feature("mobile") or viewport_size.x <= 900.0 or viewport_size.y <= 720.0
+	var portrait_layout: bool = viewport_size.y > viewport_size.x
+	var panel_height: float = clampf(viewport_size.y * (0.14 if portrait_layout and compact_touch_ui else (0.10 if compact_touch_ui else 0.11)), 84.0 if portrait_layout and compact_touch_ui else (68.0 if compact_touch_ui else 86.0), 112.0 if compact_touch_ui else 112.0)
+	var hand_card_width: float = clampf(viewport_size.x * 0.135, 160.0, 228.0)
+	var hand_card_height: float = Config.get_combat_card_height(hand_card_width)
+	var enemy_hand_height: float = 0.0
+	var player_hand_height: float = 0.0
+	if compact_touch_ui:
+		if portrait_layout:
+			hand_card_width = clampf(viewport_size.x * 0.27, 164.0, 196.0)
+			hand_card_height = Config.get_combat_card_height(hand_card_width)
+			enemy_hand_height = clampf(hand_card_height * 0.30, 74.0, 88.0)
+			player_hand_height = clampf(hand_card_height + 4.0, 250.0, 300.0)
+		else:
+			hand_card_width = clampf(viewport_size.x * 0.27, 180.0, 240.0)
+			hand_card_height = Config.get_combat_card_height(hand_card_width)
+			enemy_hand_height = clampf(hand_card_height * 0.28, 62.0, 78.0)
+			player_hand_height = clampf(hand_card_height + 2.0, 239.0, 281.0)
+	else:
+		enemy_hand_height = clampf(hand_card_height + 42.0, 170.0, 300.0)
+		player_hand_height = enemy_hand_height
+	var intent_height: float = clampf(viewport_size.y * (0.13 if compact_touch_ui else 0.11), 72.0 if compact_touch_ui else 76.0, 92.0 if compact_touch_ui else 108.0)
+
+	custom_minimum_size = Vector2.ZERO
+	position = Vector2.ZERO
+	_background.position = Vector2.ZERO
+	_background.size = viewport_size
+	add_theme_constant_override("separation", 4 if compact_touch_ui else 10)
+	_top_margin.custom_minimum_size.y = 2.0 if compact_touch_ui else 10.0
+	_action_bar.custom_minimum_size.y = 44.0 if compact_touch_ui else 52.0
+	_action_bar.add_theme_constant_override("separation", 8 if compact_touch_ui else 16)
+	_turn_label.custom_minimum_size = Vector2(0.0, 56.0 if compact_touch_ui else 46.0)
+	_turn_label.add_theme_font_size_override("font_size", 18 if compact_touch_ui else (20 if viewport_size.x >= 1200.0 else 16))
+	_end_turn_button.custom_minimum_size = Vector2(clampf(viewport_size.x * (0.26 if compact_touch_ui else 0.18), 172.0 if compact_touch_ui else 180.0, 240.0 if compact_touch_ui else 220.0), 44.0 if compact_touch_ui else 46.0)
+	_end_turn_button.add_theme_font_size_override("font_size", 16 if compact_touch_ui else 16)
+	_enemy_panel.custom_minimum_size.y = panel_height
+	_player_panel.custom_minimum_size.y = panel_height
+	_enemy_panel.apply_layout(compact_touch_ui, panel_height)
+	_player_panel.apply_layout(compact_touch_ui, panel_height)
+	_enemy_hand_area.size_flags_vertical = 3 if compact_touch_ui else 3
+	_player_hand_area.size_flags_vertical = 3 if compact_touch_ui else 3
+	_enemy_hand_area.custom_minimum_size.y = enemy_hand_height
+	_player_hand_area.custom_minimum_size.y = player_hand_height
+	_apply_hand_area_layout(_enemy_hand_area, compact_touch_ui, Vector2(hand_card_width, hand_card_height))
+	_apply_hand_area_layout(_player_hand_area, compact_touch_ui, Vector2(hand_card_width, hand_card_height))
+	if _enemy_hand_ui != null:
+		_enemy_hand_ui.set_card_size(Vector2(hand_card_width, hand_card_height))
+	if _player_hand_ui != null:
+		_player_hand_ui.set_card_size(Vector2(hand_card_width, hand_card_height))
+	_intent_panel.custom_minimum_size.y = intent_height
+	_intent_panel.apply_layout(compact_touch_ui, intent_height)
+	_tooltip.custom_minimum_size = Vector2(280.0 if compact_touch_ui else 210.0, 0.0)
+	_tooltip_name.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 12)
+	_tooltip_effects.add_theme_font_size_override("font_size", 17 if compact_touch_ui else 12)
+	_tooltip_energy.add_theme_font_size_override("font_size", 17 if compact_touch_ui else 12)
+
+
+func _apply_hand_area_layout(hand_area: HBoxContainer, compact_touch_ui: bool, card_size: Vector2) -> void:
+	var side_width := 72.0 if compact_touch_ui else 80.0
+	var pile_width := clampf(card_size.x * (0.46 if compact_touch_ui else 0.50), 58.0 if compact_touch_ui else 84.0, 96.0 if compact_touch_ui else 118.0)
+	var pile_height := clampf(card_size.y * (0.52 if compact_touch_ui else 0.58), 88.0 if compact_touch_ui else 110.0, 126.0 if compact_touch_ui else 170.0)
+	hand_area.add_theme_constant_override("separation", 10 if compact_touch_ui else 12)
+	var hand_container := hand_area.get_node("HandContainer") as HBoxContainer
+	if hand_container != null:
+		hand_container.add_theme_constant_override("separation", 8 if compact_touch_ui else 8)
+	var deck_container := hand_area.get_node("DeckContainer") as VBoxContainer
+	var deck_rect := hand_area.get_node("DeckContainer/DeckRect") as Control
+	var deck_label := hand_area.get_node("DeckContainer/DeckRect/DeckLabel") as Label
+	var deck_count := hand_area.get_node("DeckContainer/DeckCount") as Label
+	var graveyard_container := hand_area.get_node("GraveyardContainer") as VBoxContainer
+	var graveyard_rect := hand_area.get_node("GraveyardContainer/GraveyardRect") as Control
+	var graveyard_label := hand_area.get_node("GraveyardContainer/GraveyardRect/GraveyardLabel") as Label
+	var graveyard_count := hand_area.get_node("GraveyardContainer/GraveyardCount") as Label
+	deck_container.custom_minimum_size.x = side_width
+	graveyard_container.custom_minimum_size.x = side_width
+	deck_rect.custom_minimum_size = Vector2(pile_width, pile_height)
+	graveyard_rect.custom_minimum_size = Vector2(pile_width, pile_height)
+	deck_label.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 14)
+	graveyard_label.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 14)
+	deck_count.add_theme_font_size_override("font_size", 13 if compact_touch_ui else 14)
+	graveyard_count.add_theme_font_size_override("font_size", 13 if compact_touch_ui else 14)
 
 # ── Setup ────────────────────────────────────────────────────────────────────
 
@@ -140,11 +241,34 @@ func _setup_ui_references() -> void:
 	_enemy_panel.setup(false)
 	_player_panel.setup(true)
 
+
+func _setup_tooltip_overlay() -> void:
+	var overlay_parent := get_parent() as Control
+	if overlay_parent == null or _tooltip.get_parent() != self:
+		return
+	remove_child(_tooltip)
+	overlay_parent.add_child(_tooltip)
+	overlay_parent.move_child(_tooltip, overlay_parent.get_child_count() - 1)
+	_tooltip.anchor_left = 0.0
+	_tooltip.anchor_top = 0.0
+	_tooltip.anchor_right = 0.0
+	_tooltip.anchor_bottom = 0.0
+	_tooltip.offset_left = 0.0
+	_tooltip.offset_top = 0.0
+	_tooltip.offset_right = 0.0
+	_tooltip.offset_bottom = 0.0
+	_tooltip.visible = false
+	_tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_tooltip.position = Vector2.ZERO
+
 func _connect_ui_signals() -> void:
 	_player_hand_ui.card_played_from_hand.connect(_on_player_card_played)
+	_player_hand_ui.card_secondary_clicked_in_hand.connect(_on_card_secondary_clicked)
 	_player_hand_ui.card_hovered_in_hand.connect(_on_card_hovered)
 	_player_hand_ui.card_unhovered_in_hand.connect(_on_card_unhovered)
-	_player_panel.end_turn_pressed.connect(_on_end_turn_pressed)
+	_player_hand_ui.card_long_pressed_in_hand.connect(_on_card_long_pressed)
+	_player_hand_ui.card_long_press_released_in_hand.connect(_on_card_long_press_released)
+	_end_turn_button.pressed.connect(_on_end_turn_pressed)
 
 # ── Risposta agli stati FSM ──────────────────────────────────────────────────
 
@@ -157,7 +281,7 @@ func _on_state_changed(new_state: TurnManager.State) -> void:
 
 		TurnManager.State.ENEMY_DRAW:
 			_player_hand_ui.interactive = false
-			_player_panel.show_end_turn_button(false)
+			_end_turn_button.visible = false
 			_enemy_hand_area.visible = Config.show_enemy_hand
 			if Config.animate_enemy_turn:
 				_turn_label.text = "↙ Il nemico pesca..."
@@ -207,7 +331,7 @@ func _on_state_changed(new_state: TurnManager.State) -> void:
 				encounter_label = " [%s %d/4]" % [enemy_data.type_label(), GameManager.encounter_index + 1]
 			_turn_label.text = "Turno %d — Il tuo turno!%s" % [_turn_manager.turn_number, encounter_label]
 			_player_hand_ui.interactive = true
-			_player_panel.show_end_turn_button(true)
+			_end_turn_button.visible = true
 			_refresh_hand_ui(_player_hand_ui, _player, true)
 			_refresh_actor_panels()
 			_refresh_deck_counts()  # ← aggiornato DOPO il draw
@@ -215,7 +339,7 @@ func _on_state_changed(new_state: TurnManager.State) -> void:
 		TurnManager.State.RESOLUTION:
 			_turn_label.text = "Risoluzione..."
 			_player_hand_ui.interactive = false
-			_player_panel.show_end_turn_button(false)
+			_end_turn_button.visible = false
 			_animate_hp_next = true
 
 		TurnManager.State.TURN_END:
@@ -225,7 +349,7 @@ func _on_state_changed(new_state: TurnManager.State) -> void:
 
 		TurnManager.State.GAME_OVER:
 			_player_hand_ui.interactive = false
-			_player_panel.show_end_turn_button(false)
+			_end_turn_button.visible = false
 
 func _on_turn_started(turn_number: int) -> void:
 	_turn_label.text = "Turno %d" % turn_number
@@ -355,6 +479,28 @@ func _on_game_over(player_won: bool) -> void:
 # ── Tooltip ──────────────────────────────────────────────────────────────────
 
 func _on_card_hovered(card: CardData) -> void:
+	if _is_touch_tooltip_mode():
+		_show_tooltip(card, true)
+
+
+func _on_card_long_pressed(card: CardData) -> void:
+	_show_tooltip(card, true)
+
+
+func _on_card_secondary_clicked(card: CardData) -> void:
+	if _is_touch_tooltip_mode():
+		return
+	if _tooltip.visible and _tooltip_anchor_card == card:
+		_hide_tooltip()
+		return
+	_show_tooltip(card, true)
+
+
+func _show_tooltip(card: CardData, anchor_to_card: bool) -> void:
+	_tooltip_anchor_card = card
+	_tooltip_anchor_to_card = anchor_to_card or _is_touch_tooltip_mode()
+	var tooltip_width := 250.0 if _is_touch_tooltip_mode() else 210.0
+	var text_width := tooltip_width - 16.0
 	_tooltip_name.text = card.card_name
 	var effects: Array[String] = []
 	if card.damage > 0: effects.append("Danno: +%d" % card.damage)
@@ -363,23 +509,85 @@ func _on_card_hovered(card: CardData) -> void:
 	if card.status_effect != "":
 		var tgt := "sé stesso" if card.status_target == "self" else "avversario"
 		effects.append("Stato: %s → %s" % [card.status_effect.to_upper(), tgt])
-	_tooltip_effects.text = "\n".join(effects)
+	var effects_text := "\n".join(effects)
+	_tooltip_effects.text = effects_text
 	_tooltip_energy.text  = "ENE: %d" % card.energy_cost
+	var title_height := _estimate_tooltip_text_block_height(card.card_name, text_width, 18.0)
+	var effects_height := _estimate_tooltip_text_block_height(effects_text, text_width, 17.0)
+	var energy_height := 18.0
+	var content_height := title_height + effects_height + energy_height + 8.0
+	var panel_height := content_height + 16.0
+	_tooltip.custom_minimum_size = Vector2(tooltip_width, panel_height)
+	_tooltip_box.custom_minimum_size = Vector2(text_width, content_height)
+	_tooltip_name.custom_minimum_size = Vector2(text_width, title_height)
+	_tooltip_effects.custom_minimum_size = Vector2(text_width, effects_height)
+	_tooltip_energy.custom_minimum_size = Vector2(text_width, energy_height)
 	_tooltip.visible = true
+	_tooltip.size = Vector2(tooltip_width, panel_height)
 	_reposition_tooltip()
+	call_deferred("_finalize_tooltip_geometry", tooltip_width, panel_height)
 
 func _on_card_unhovered(_card: CardData) -> void:
-	_tooltip.visible = false
+	if _is_touch_tooltip_mode():
+		_hide_tooltip()
+
+
+func _on_card_long_press_released(_card: CardData) -> void:
+	_hide_tooltip()
 
 func _input(event: InputEvent) -> void:
-	if _tooltip.visible and event is InputEventMouseMotion:
+	if _tooltip.visible and not _tooltip_anchor_to_card and event is InputEventMouseMotion:
 		_reposition_tooltip()
+	elif _tooltip.visible and not _is_touch_tooltip_mode() and event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			_hide_tooltip()
+
+
+func _is_touch_tooltip_mode() -> bool:
+	return OS.has_feature("mobile")
+
+
+func _estimate_tooltip_text_block_height(text: String, text_width: float, line_height: float) -> float:
+	var chars_per_line := maxi(12, int(text_width / 7.5))
+	var line_count := 0
+	for paragraph in text.split("\n"):
+		line_count += maxi(1, int(ceili(float(maxi(paragraph.length(), 1)) / float(chars_per_line))))
+	return float(maxi(1, line_count)) * line_height
+
+
+func _finalize_tooltip_geometry(tooltip_width: float, panel_height: float) -> void:
+	if not _tooltip.visible:
+		return
+	_tooltip.size = Vector2(tooltip_width, panel_height)
+	_reposition_tooltip()
+
+
+func _hide_tooltip() -> void:
+	_tooltip_anchor_card = null
+	_tooltip_anchor_to_card = false
+	_tooltip.visible = false
 
 func _reposition_tooltip() -> void:
-	var mouse_pos := get_viewport().get_mouse_position()
 	var vp_size   := get_viewport().get_visible_rect().size
 	var ts        := _tooltip.size
-	var pos := mouse_pos + Vector2(14, 14)
+	var pos := Vector2.ZERO
+	if _tooltip_anchor_to_card and _tooltip_anchor_card != null:
+		var card_ui := _player_hand_ui.get_card_ui(_tooltip_anchor_card)
+		if is_instance_valid(card_ui):
+			pos = Vector2(
+				card_ui.global_position.x + (card_ui.size.x - ts.x) * 0.5,
+				card_ui.global_position.y - ts.y - 12.0
+			)
+			if pos.y < 8.0:
+				pos.y = card_ui.global_position.y + card_ui.size.y + 12.0
+			if _is_touch_tooltip_mode() and pos.y + ts.y > vp_size.y - 12.0:
+				pos.y = clamp(card_ui.global_position.y - ts.y - 12.0, 12.0, vp_size.y - ts.y - 12.0)
+		else:
+			pos = Vector2((vp_size.x - ts.x) * 0.5, (vp_size.y - ts.y) * 0.5)
+	else:
+		var mouse_pos := get_viewport().get_mouse_position()
+		pos = mouse_pos + Vector2(14, 14)
 	pos.x = clamp(pos.x, 0.0, vp_size.x - ts.x - 4.0)
 	pos.y = clamp(pos.y, 0.0, vp_size.y - ts.y - 4.0)
 	_tooltip.position = pos
@@ -423,10 +631,16 @@ func _refresh_intent_panel() -> void:
 	_intent_panel.update_intents(_player.current_intents, _enemy.current_intents)
 
 func _refresh_deck_counts() -> void:
-	_enemy_deck_count.text       = "Mazzo: %d" % _enemy.deck.size()
-	_enemy_graveyard_count.text  = "Cimitero: %d" % _enemy.graveyard.size()
-	_player_deck_count.text      = "Mazzo: %d" % _player.deck.size()
-	_player_graveyard_count.text = "Cimitero: %d" % _player.graveyard.size()
+	if OS.has_feature("mobile"):
+		_enemy_deck_count.text       = "M %d" % _enemy.deck.size()
+		_enemy_graveyard_count.text  = "C %d" % _enemy.graveyard.size()
+		_player_deck_count.text      = "M %d" % _player.deck.size()
+		_player_graveyard_count.text = "C %d" % _player.graveyard.size()
+	else:
+		_enemy_deck_count.text       = "Mazzo: %d" % _enemy.deck.size()
+		_enemy_graveyard_count.text  = "Cimitero: %d" % _enemy.graveyard.size()
+		_player_deck_count.text      = "Mazzo: %d" % _player.deck.size()
+		_player_graveyard_count.text = "Cimitero: %d" % _player.graveyard.size()
 
 # ── Gestione segnali status effect ──────────────────────────────────────────
 

@@ -36,6 +36,10 @@ extends Node
 ## Se false le carte appaiono come dorso coperto.
 @export var show_enemy_card_details: bool = false
 
+## Rapporto larghezza:altezza delle carte in combattimento.
+## Esempio: (2.5, 3.0) => altezza = larghezza * 3.0 / 2.5
+@export var combat_card_aspect_ratio: Vector2 = Vector2(2.5, 3.0)
+
 # ── Animazioni ───────────────────────────────────────────────────────────────
 
 ## Moltiplicatore velocità animazioni (1.0 = normale, 0.0 = istantanee)
@@ -73,8 +77,14 @@ extends Node
 ## Soglia punteggio per rating S (richiede vittoria completa)
 @export var rating_s_threshold: int = 1200
 
+## Converte una larghezza carta nell'altezza corrispondente secondo il rapporto configurato.
+func get_combat_card_height(card_width: float) -> float:
+	var ratio_width := combat_card_aspect_ratio.x if combat_card_aspect_ratio.x > 0.0 else 2.5
+	var ratio_height := combat_card_aspect_ratio.y if combat_card_aspect_ratio.y > 0.0 else 3.0
+	return card_width * ratio_height / ratio_width
+
 func _ready() -> void:
-	DebugLogger.log_system("[Config] player_hp=%d | enemy_hp=%d | energy=%d/%d | draw=%d | animate_enemy=%s" % [
+	DebugLogger.log_system("[Config] player_hp=%d | enemy_hp=%d | energy=%d/%d | draw=%d | animate_enemy=%s | combat_card_ratio=%s" % [
 		player_max_hp, enemy_max_hp, player_max_energy, enemy_max_energy,
-		cards_per_draw, animate_enemy_turn
+		cards_per_draw, animate_enemy_turn, combat_card_aspect_ratio
 	])

@@ -1,78 +1,111 @@
-[gd_scene format=3 uid="uid://d1kd6n0fqx2lh"]
+[gd_scene load_steps=2 format=3 uid="uid://d1kd6n0fqx2lh"]
 
 [ext_resource type="Script" uid="uid://p0ndoi2vn06t" path="res://scripts/screens/card_selection_screen.gd" id="1_abc12"]
+[ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="2_backdrop"]
 
 [node name="CardSelectionScreen" type="Control" unique_id=317941348]
-layout_mode = 1
-anchors_left = 0.0
-anchors_top = 0.0
-anchors_right = 1.0
-anchors_bottom = 1.0
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_abc12")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Background" type="Control" parent="." unique_id=2014594110]
 layout_mode = 1
-anchors_left = 0.0
-anchors_top = 0.0
-anchors_right = 1.0
-anchors_bottom = 1.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("2_backdrop")
+variant = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1015547741]
+[node name="CenterContainer" type="Control" parent="." unique_id=328693232]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ContentPanel" type="PanelContainer" parent="CenterContainer" unique_id=564782499]
+layout_mode = 0
+theme_type_variation = &"ScreenPanel"
+
+[node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel" unique_id=694350746]
 layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
 
-[node name="TopBar" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=470626331]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin" unique_id=1015547741]
+layout_mode = 0
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer" unique_id=470626331]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+theme_override_constants/separation = 18
 
-[node name="CharacterInfoLeft" type="VBoxContainer" parent="CenterContainer/VBoxContainer/TopBar" unique_id=1778122937]
+[node name="CharacterPortraitCard" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar" unique_id=308361967]
+custom_minimum_size = Vector2(116, 116)
+layout_mode = 2
+theme_type_variation = &"PortraitPanel"
+
+[node name="CharacterPortrait" type="TextureRect" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterPortraitCard" unique_id=2081234763]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterInfoLeft" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar" unique_id=1778122937]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CharacterNameCard" type="Label" parent="CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=2006951291]
+[node name="CharacterNameCard" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=2006951291]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Phoenix Guardian"
 
-[node name="CharacterDescriptionCard" type="Label" parent="CenterContainer/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=1944105381]
+[node name="CharacterDescriptionCard" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterInfoLeft" unique_id=1944105381]
 layout_mode = 2
 text = "Descrizione personaggio"
+autowrap_mode = 3
 text_overrun_behavior = 2
 
-[node name="SelectionCounter" type="Label" parent="CenterContainer/VBoxContainer/TopBar" unique_id=428543638]
+[node name="SelectionCounter" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar" unique_id=428543638]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "0 / 10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=306527988]
+[node name="TitleLabel" type="Label" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer" unique_id=306527988]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Seleziona 10 carte del personaggio:"
 
-[node name="CardGridScroll" type="ScrollContainer" parent="CenterContainer/VBoxContainer" unique_id=974005281]
+[node name="CardGridScroll" type="ScrollContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer" unique_id=974005281]
+custom_minimum_size = Vector2(1120, 540)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="CardGrid" type="GridContainer" parent="CenterContainer/VBoxContainer/CardGridScroll" unique_id=1996905866]
+[node name="CardGrid" type="GridContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CardGridScroll" unique_id=1996905866]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 columns = 5
 
-[node name="BottomBar" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1753397602]
+[node name="BottomBar" type="HBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer" unique_id=1753397602]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
 
-[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer/BottomBar" unique_id=1035615458]
-custom_minimum_size = Vector2(100, 50)
+[node name="BackButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/BottomBar" unique_id=1035615458]
+custom_minimum_size = Vector2(160, 50)
 layout_mode = 2
 text = "Indietro"
 
-[node name="ConfirmButton" type="Button" parent="CenterContainer/VBoxContainer/BottomBar" unique_id=1390038275]
-custom_minimum_size = Vector2(0, 50)
+[node name="ConfirmButton" type="Button" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/BottomBar" unique_id=1390038275]
+custom_minimum_size = Vector2(260, 50)
 layout_mode = 2
-size_flags_horizontal = 3
 disabled = true
 text = "Conferma Mazzo"
