@@ -72,31 +72,88 @@ func _on_viewport_size_changed() -> void:
 
 func _apply_responsive_layout() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
-	var compact_touch_ui := OS.has_feature("mobile") or viewport_size.x <= 900.0 or viewport_size.y <= 720.0
+	if _uses_mobile_layout(viewport_size):
+		_apply_mobile_layout(viewport_size)
+	else:
+		_apply_desktop_layout(viewport_size)
+
+
+func _uses_mobile_layout(viewport_size: Vector2) -> bool:
+	return OS.has_feature("mobile") or viewport_size.x <= 900.0 or viewport_size.y <= 720.0
+
+
+func _apply_mobile_layout(viewport_size: Vector2) -> void:
 	var portrait_layout := viewport_size.y > viewport_size.x
-	var content_width: float = clampf(viewport_size.x - (24.0 if compact_touch_ui else 96.0), 300.0, 620.0 if compact_touch_ui else 760.0)
+	var content_width: float = clampf(viewport_size.x - 24.0, 300.0, 620.0)
 	var portrait_card_width: float = clampf(content_width * (0.42 if portrait_layout else 0.30), 128.0, 190.0)
 	var portrait_size: float = clampf(portrait_card_width - 32.0, 104.0, 152.0)
-	var button_width: float = clampf(content_width * 0.56, 220.0, 320.0)
-	var button_height: float = 58.0 if compact_touch_ui else 54.0
+	_apply_layout_values({
+		"content_width": content_width,
+		"layout_width": content_width - 56.0,
+		"separation": 16,
+		"portrait_separation": 12,
+		"title_font": 34,
+		"enemy_font": 19,
+		"stats_font": 16,
+		"score_font": 20,
+		"total_font": 15,
+		"next_font": 15,
+		"button_width": clampf(content_width * 0.56, 220.0, 320.0),
+		"button_height": 58.0,
+		"button_font": 20,
+		"portrait_card_width": portrait_card_width,
+		"portrait_size": portrait_size,
+		"name_font": 14,
+	})
+
+
+func _apply_desktop_layout(viewport_size: Vector2) -> void:
+	var portrait_layout := viewport_size.y > viewport_size.x
+	var content_width: float = clampf(viewport_size.x - 96.0, 360.0, 760.0)
+	var portrait_card_width: float = clampf(content_width * (0.42 if portrait_layout else 0.30), 128.0, 190.0)
+	var portrait_size: float = clampf(portrait_card_width - 32.0, 104.0, 152.0)
+	_apply_layout_values({
+		"content_width": content_width,
+		"layout_width": content_width - 56.0,
+		"separation": 18,
+		"portrait_separation": 18,
+		"title_font": 42,
+		"enemy_font": 22,
+		"stats_font": 18,
+		"score_font": 22,
+		"total_font": 16,
+		"next_font": 17,
+		"button_width": clampf(content_width * 0.56, 220.0, 320.0),
+		"button_height": 54.0,
+		"button_font": 22,
+		"portrait_card_width": portrait_card_width,
+		"portrait_size": portrait_size,
+		"name_font": 16,
+	})
+
+
+func _apply_layout_values(config: Dictionary) -> void:
+	var content_width: float = config["content_width"]
+	var portrait_card_width: float = config["portrait_card_width"]
+	var portrait_size: float = config["portrait_size"]
 	_content_panel.custom_minimum_size = Vector2(content_width, 0.0)
-	_layout_box.custom_minimum_size = Vector2(content_width - 56.0, 0.0)
-	_layout_box.add_theme_constant_override("separation", 16 if compact_touch_ui else 18)
-	_portrait_row.add_theme_constant_override("separation", 12 if compact_touch_ui else 18)
-	_title_label.add_theme_font_size_override("font_size", 34 if compact_touch_ui else 42)
-	_enemy_label.add_theme_font_size_override("font_size", 19 if compact_touch_ui else 22)
-	_stats_label.add_theme_font_size_override("font_size", 16 if compact_touch_ui else 18)
-	_score_label.add_theme_font_size_override("font_size", 20 if compact_touch_ui else 22)
-	_total_score_label.add_theme_font_size_override("font_size", 15 if compact_touch_ui else 16)
-	_next_enemy_label.add_theme_font_size_override("font_size", 15 if compact_touch_ui else 17)
-	_continue_button.custom_minimum_size = Vector2(button_width, button_height)
-	_continue_button.add_theme_font_size_override("font_size", 20 if compact_touch_ui else 22)
+	_layout_box.custom_minimum_size = Vector2(config["layout_width"], 0.0)
+	_layout_box.add_theme_constant_override("separation", config["separation"])
+	_portrait_row.add_theme_constant_override("separation", config["portrait_separation"])
+	_title_label.add_theme_font_size_override("font_size", config["title_font"])
+	_enemy_label.add_theme_font_size_override("font_size", config["enemy_font"])
+	_stats_label.add_theme_font_size_override("font_size", config["stats_font"])
+	_score_label.add_theme_font_size_override("font_size", config["score_font"])
+	_total_score_label.add_theme_font_size_override("font_size", config["total_font"])
+	_next_enemy_label.add_theme_font_size_override("font_size", config["next_font"])
+	_continue_button.custom_minimum_size = Vector2(config["button_width"], config["button_height"])
+	_continue_button.add_theme_font_size_override("font_size", config["button_font"])
 	_player_card.custom_minimum_size = Vector2(portrait_card_width, portrait_size + 62.0)
 	_enemy_card.custom_minimum_size = Vector2(portrait_card_width, portrait_size + 62.0)
 	_player_portrait.custom_minimum_size = Vector2(portrait_size, portrait_size)
 	_enemy_portrait.custom_minimum_size = Vector2(portrait_size, portrait_size)
-	_player_name.add_theme_font_size_override("font_size", 14 if compact_touch_ui else 16)
-	_enemy_name.add_theme_font_size_override("font_size", 14 if compact_touch_ui else 16)
+	_player_name.add_theme_font_size_override("font_size", config["name_font"])
+	_enemy_name.add_theme_font_size_override("font_size", config["name_font"])
 
 
 func _populate_portraits(enemy_name: String) -> void:

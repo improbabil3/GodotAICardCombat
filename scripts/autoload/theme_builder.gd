@@ -12,7 +12,6 @@ static func build() -> Theme:
 	var theme := Theme.new()
 
 	# --- Palette colori base ---
-	var bg_dark   := Color(0.05, 0.06, 0.12, 1)
 	var cyan      := Color(0.0,  0.75, 1.0,  1)
 	var cyan_dim  := Color(0.0,  0.5,  0.7,  1)
 	var white_dim := Color(0.85, 0.90, 0.95, 1)
@@ -76,6 +75,19 @@ static func build() -> Theme:
 	screen_panel.shadow_color = Color(0.01, 0.02, 0.05, 0.55)
 	screen_panel.shadow_size = 8
 	theme.set_stylebox("panel", "ScreenPanel", screen_panel)
+
+	var selection_panel := StyleBoxFlat.new()
+	selection_panel.bg_color = Color(0.0, 0.0, 0.0, 0.0)
+	selection_panel.border_color = Color(0.0, 0.0, 0.0, 0.0)
+	selection_panel.set_border_width_all(0)
+	selection_panel.set_corner_radius_all(0)
+	selection_panel.content_margin_left = 0
+	selection_panel.content_margin_top = 0
+	selection_panel.content_margin_right = 0
+	selection_panel.content_margin_bottom = 0
+	selection_panel.shadow_color = Color(0.0, 0.0, 0.0, 0.0)
+	selection_panel.shadow_size = 0
+	theme.set_stylebox("panel", "SelectionPanel", selection_panel)
 
 	var portrait_panel := StyleBoxFlat.new()
 	portrait_panel.bg_color = Color(0.08, 0.11, 0.20, 0.96)

@@ -94,28 +94,72 @@ func _on_viewport_size_changed() -> void:
 
 func _apply_responsive_layout() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
-	var compact_touch_ui: bool = OS.has_feature("mobile") or viewport_size.x <= 900.0 or viewport_size.y <= 720.0
+	if _uses_mobile_layout(viewport_size):
+		_apply_mobile_layout(viewport_size)
+	else:
+		_apply_desktop_layout(viewport_size)
+
+
+func _uses_mobile_layout(viewport_size: Vector2) -> bool:
+	return OS.has_feature("mobile") or viewport_size.x <= 900.0 or viewport_size.y <= 720.0
+
+
+func _apply_mobile_layout(viewport_size: Vector2) -> void:
 	var portrait_layout: bool = viewport_size.y > viewport_size.x
-	var panel_height: float = clampf(viewport_size.y * (0.14 if portrait_layout and compact_touch_ui else (0.10 if compact_touch_ui else 0.11)), 84.0 if portrait_layout and compact_touch_ui else (68.0 if compact_touch_ui else 86.0), 112.0 if compact_touch_ui else 112.0)
-	var hand_card_width: float = clampf(viewport_size.x * 0.135, 160.0, 228.0)
-	var hand_card_height: float = Config.get_combat_card_height(hand_card_width)
+	var panel_height: float = clampf(viewport_size.y * (0.14 if portrait_layout else 0.10), 84.0 if portrait_layout else 68.0, 112.0)
+	var hand_card_width: float = 0.0
+	var hand_card_height: float = 0.0
 	var enemy_hand_height: float = 0.0
 	var player_hand_height: float = 0.0
-	if compact_touch_ui:
-		if portrait_layout:
-			hand_card_width = clampf(viewport_size.x * 0.27, 164.0, 196.0)
-			hand_card_height = Config.get_combat_card_height(hand_card_width)
-			enemy_hand_height = clampf(hand_card_height * 0.30, 74.0, 88.0)
-			player_hand_height = clampf(hand_card_height + 4.0, 250.0, 300.0)
-		else:
-			hand_card_width = clampf(viewport_size.x * 0.27, 180.0, 240.0)
-			hand_card_height = Config.get_combat_card_height(hand_card_width)
-			enemy_hand_height = clampf(hand_card_height * 0.28, 62.0, 78.0)
-			player_hand_height = clampf(hand_card_height + 2.0, 239.0, 281.0)
+	if portrait_layout:
+		hand_card_width = clampf(viewport_size.x * 0.27, 164.0, 196.0)
+		hand_card_height = Config.get_combat_card_height(hand_card_width)
+		enemy_hand_height = clampf(hand_card_height * 0.30, 74.0, 88.0)
+		player_hand_height = clampf(hand_card_height + 4.0, 250.0, 300.0)
 	else:
-		enemy_hand_height = clampf(hand_card_height + 42.0, 170.0, 300.0)
-		player_hand_height = enemy_hand_height
-	var intent_height: float = clampf(viewport_size.y * (0.13 if compact_touch_ui else 0.11), 72.0 if compact_touch_ui else 76.0, 92.0 if compact_touch_ui else 108.0)
+		hand_card_width = clampf(viewport_size.x * 0.27, 180.0, 240.0)
+		hand_card_height = Config.get_combat_card_height(hand_card_width)
+		enemy_hand_height = clampf(hand_card_height * 0.28, 62.0, 78.0)
+		player_hand_height = clampf(hand_card_height + 2.0, 239.0, 281.0)
+	var intent_height: float = clampf(viewport_size.y * 0.13, 72.0, 92.0)
+	_apply_layout_values({
+		"mode_label": "mobile_portrait" if portrait_layout else "mobile_landscape",
+		"viewport_size": viewport_size,
+		"compact_touch_ui": true,
+		"panel_height": panel_height,
+		"hand_card_size": Vector2(hand_card_width, hand_card_height),
+		"enemy_hand_height": enemy_hand_height,
+		"player_hand_height": player_hand_height,
+		"intent_height": intent_height,
+	})
+
+
+func _apply_desktop_layout(viewport_size: Vector2) -> void:
+	var panel_height: float = clampf(viewport_size.y * 0.11, 86.0, 112.0)
+	var hand_card_width: float = clampf(viewport_size.x * 0.135, 160.0, 228.0)
+	var hand_card_height: float = Config.get_combat_card_height(hand_card_width)
+	var enemy_hand_height: float = clampf(hand_card_height + 42.0, 170.0, 300.0)
+	var intent_height: float = clampf(viewport_size.y * 0.11, 76.0, 108.0)
+	_apply_layout_values({
+		"mode_label": "desktop",
+		"viewport_size": viewport_size,
+		"compact_touch_ui": false,
+		"panel_height": panel_height,
+		"hand_card_size": Vector2(hand_card_width, hand_card_height),
+		"enemy_hand_height": enemy_hand_height,
+		"player_hand_height": enemy_hand_height,
+		"intent_height": intent_height,
+	})
+
+
+func _apply_layout_values(config: Dictionary) -> void:
+	var viewport_size: Vector2 = config["viewport_size"]
+	var compact_touch_ui: bool = config["compact_touch_ui"]
+	var panel_height: float = config["panel_height"]
+	var hand_card_size: Vector2 = config["hand_card_size"]
+	var enemy_hand_height: float = config["enemy_hand_height"]
+	var player_hand_height: float = config["player_hand_height"]
+	var intent_height: float = config["intent_height"]
 
 	custom_minimum_size = Vector2.ZERO
 	position = Vector2.ZERO
@@ -128,27 +172,28 @@ func _apply_responsive_layout() -> void:
 	_turn_label.custom_minimum_size = Vector2(0.0, 56.0 if compact_touch_ui else 46.0)
 	_turn_label.add_theme_font_size_override("font_size", 18 if compact_touch_ui else (20 if viewport_size.x >= 1200.0 else 16))
 	_end_turn_button.custom_minimum_size = Vector2(clampf(viewport_size.x * (0.26 if compact_touch_ui else 0.18), 172.0 if compact_touch_ui else 180.0, 240.0 if compact_touch_ui else 220.0), 44.0 if compact_touch_ui else 46.0)
-	_end_turn_button.add_theme_font_size_override("font_size", 16 if compact_touch_ui else 16)
+	_end_turn_button.add_theme_font_size_override("font_size", 16)
 	_enemy_panel.custom_minimum_size.y = panel_height
 	_player_panel.custom_minimum_size.y = panel_height
 	_enemy_panel.apply_layout(compact_touch_ui, panel_height)
 	_player_panel.apply_layout(compact_touch_ui, panel_height)
-	_enemy_hand_area.size_flags_vertical = 3 if compact_touch_ui else 3
-	_player_hand_area.size_flags_vertical = 3 if compact_touch_ui else 3
+	_enemy_hand_area.size_flags_vertical = 3
+	_player_hand_area.size_flags_vertical = 3
 	_enemy_hand_area.custom_minimum_size.y = enemy_hand_height
 	_player_hand_area.custom_minimum_size.y = player_hand_height
-	_apply_hand_area_layout(_enemy_hand_area, compact_touch_ui, Vector2(hand_card_width, hand_card_height))
-	_apply_hand_area_layout(_player_hand_area, compact_touch_ui, Vector2(hand_card_width, hand_card_height))
+	_apply_hand_area_layout(_enemy_hand_area, compact_touch_ui, hand_card_size)
+	_apply_hand_area_layout(_player_hand_area, compact_touch_ui, hand_card_size)
 	if _enemy_hand_ui != null:
-		_enemy_hand_ui.set_card_size(Vector2(hand_card_width, hand_card_height))
+		_enemy_hand_ui.set_card_size(hand_card_size)
 	if _player_hand_ui != null:
-		_player_hand_ui.set_card_size(Vector2(hand_card_width, hand_card_height))
+		_player_hand_ui.set_card_size(hand_card_size)
 	_intent_panel.custom_minimum_size.y = intent_height
 	_intent_panel.apply_layout(compact_touch_ui, intent_height)
 	_tooltip.custom_minimum_size = Vector2(280.0 if compact_touch_ui else 210.0, 0.0)
 	_tooltip_name.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 12)
 	_tooltip_effects.add_theme_font_size_override("font_size", 17 if compact_touch_ui else 12)
 	_tooltip_energy.add_theme_font_size_override("font_size", 17 if compact_touch_ui else 12)
+	DebugLogger.log_system("GameScreen[%s]: viewport=%s hand=%s panels=%f intent=%f" % [config["mode_label"], viewport_size, hand_card_size, panel_height, intent_height])
 
 
 func _apply_hand_area_layout(hand_area: HBoxContainer, compact_touch_ui: bool, card_size: Vector2) -> void:

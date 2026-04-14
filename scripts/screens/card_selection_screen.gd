@@ -8,9 +8,11 @@ extends Control
 const CARD_SCENE := preload("res://scenes/card/card.tscn")
 
 # ── Riferimenti UI ─────────────────────────────────────────────────────────────
-@onready var _content_panel: PanelContainer = $CenterContainer/ContentPanel
+@onready var _content_panel: Control = $CenterContainer/ContentPanel
+@onready var _content_margin: MarginContainer = $CenterContainer/ContentPanel/ContentMargin
 @onready var _layout_box: VBoxContainer = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer
 @onready var _top_bar: HBoxContainer = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar
+@onready var _character_portrait_card: Control = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterPortraitCard
 @onready var _character_portrait: TextureRect = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterPortraitCard/CharacterPortrait
 @onready var _character_name_card: Label = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterInfoLeft/CharacterNameCard
 @onready var _character_description_card: Label = $CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterInfoLeft/CharacterDescriptionCard
@@ -35,6 +37,8 @@ var _tooltip_effects: Label = null
 var _tooltip_energy: Label = null
 var _tooltip_anchor_button: Control = null
 var _tooltip_anchor_card: CardData = null
+
+const CARD_ASPECT_RATIO := 212.0 / 148.0
 
 func _ready() -> void:
 	DebugLogger.log_system("CardSelectionScreen: avvio")
@@ -148,9 +152,12 @@ func _show_tooltip(card: CardData, anchor_button: Control) -> void:
 	var tooltip_title := "%s %s" % [_status_symbol(card), card.card_name] if card.status_effect != "" else card.card_name
 	_tooltip_name.text = tooltip_title
 	var effects: Array[String] = []
-	if card.damage > 0: effects.append("Danno: +%d" % card.damage)
-	if card.shield > 0: effects.append("Scudo: +%d" % card.shield)
-	if card.heal > 0: effects.append("Guarigione: +%d" % card.heal)
+	if card.damage > 0:
+		effects.append("Danno: +%d" % card.damage)
+	if card.shield > 0:
+		effects.append("Scudo: +%d" % card.shield)
+	if card.heal > 0:
+		effects.append("Guarigione: +%d" % card.heal)
 	if card.status_effect != "":
 		var target := "sé stesso" if card.status_target == "self" else "avversario"
 		effects.append("Effetto: %s su %s" % [card.status_effect.to_upper(), target])
@@ -206,6 +213,207 @@ func _log_tooltip_geometry(stage: String, tooltip_width: float, panel_height: fl
 	)
 
 
+func _apply_responsive_layout() -> void:
+	var viewport_size: Vector2 = get_viewport_rect().size
+	if _uses_compact_mobile_layout():
+		_apply_mobile_layout(viewport_size)
+	else:
+		_apply_desktop_layout(viewport_size)
+
+
+func _apply_mobile_layout(viewport_size: Vector2) -> void:
+	var portrait_layout := viewport_size.y > viewport_size.x
+	var mobile_landscape := not portrait_layout
+	var screen_margin: float = 4.0 if mobile_landscape else 10.0
+	var top_margin: float = 6.0 if mobile_landscape else 10.0
+	var content_margin_x: int = 10 if mobile_landscape else 16
+	var content_margin_y: int = 10 if mobile_landscape else 16
+	var layout_width: float = clampf(viewport_size.x - screen_margin * 2.0, 320.0, 1820.0)
+	var layout_height: float = clampf(viewport_size.y - (top_margin + 8.0), 420.0, 980.0)
+	var spacing: int = 6 if mobile_landscape else 8
+	var top_height: float = clampf(viewport_size.y * (0.095 if mobile_landscape else 0.12), 64.0 if mobile_landscape else 84.0, 84.0 if mobile_landscape else 112.0)
+	var bottom_height: float = 52.0 if mobile_landscape else 64.0
+	var title_height: float = 28.0 if mobile_landscape else 40.0
+	var grid_gap: int = 4 if mobile_landscape else 6
+	var inner_width: float = layout_width - float(content_margin_x * 2)
+	var columns: int = 4 if portrait_layout else (8 if inner_width >= 1380.0 else 7)
+	var total_cards: int = _selected_character.specific_cards.size() if _selected_character != null else 20
+	var row_count: int = ceili(float(total_cards) / float(columns))
+	var max_grid_height: float = maxf(220.0, layout_height - top_height - title_height - bottom_height - float(spacing * 3))
+	var width_limited_card_width: float = floor((inner_width - float((columns - 1) * grid_gap)) / float(columns))
+	var max_card_height_by_rows: float = floor((max_grid_height - float((row_count - 1) * grid_gap)) / float(maxi(1, row_count)))
+	var height_limited_card_width: float = floor(max_card_height_by_rows / CARD_ASPECT_RATIO)
+	var card_width: float = maxf(96.0, min(width_limited_card_width, height_limited_card_width))
+	var card_height: float = clampf(card_width * CARD_ASPECT_RATIO, 160.0 if mobile_landscape else 188.0, 320.0)
+	var full_grid_height := card_height * float(row_count) + float((row_count - 1) * grid_gap)
+	var scroll_height: float = full_grid_height
+	var total_height: float = top_height + title_height + scroll_height + bottom_height + float(spacing * 3)
+	_apply_layout_values({
+		"mode_label": "mobile_landscape" if mobile_landscape else "mobile_portrait",
+		"layout_width": layout_width,
+		"layout_height": layout_height,
+		"inner_width": inner_width,
+		"total_height": total_height,
+		"content_margin_x": content_margin_x,
+		"content_margin_y": content_margin_y,
+		"panel_y": maxf(top_margin, floor((viewport_size.y - total_height) * 0.5)),
+		"spacing": spacing,
+		"top_height": top_height,
+		"bottom_height": bottom_height,
+		"title_font_size": 18 if mobile_landscape else 24,
+		"selection_counter_width": 92.0 if mobile_landscape else 150.0,
+		"selection_counter_font": 15 if mobile_landscape else 18,
+		"name_font_size": 20 if mobile_landscape else 24,
+		"description_font_size": 12 if mobile_landscape else 14,
+		"description_visible": not mobile_landscape,
+		"portrait_size": 64.0 if mobile_landscape else 72.0,
+		"grid_gap": grid_gap,
+		"scroll_height": scroll_height,
+		"columns": columns,
+		"card_width": card_width,
+		"card_height": card_height,
+		"button_font_size": 15 if mobile_landscape else 18,
+		"bottom_alignment": BoxContainer.ALIGNMENT_CENTER,
+		"back_width_factor": 0.18,
+		"confirm_width_factor": 0.32,
+		"hide_scrollbars": true,
+	})
+
+
+func _apply_desktop_layout(viewport_size: Vector2) -> void:
+	var portrait_layout := viewport_size.y > viewport_size.x
+	var screen_margin := 48.0
+	var content_margin_x := 28
+	var content_margin_y := 24
+	var layout_width: float = clampf(viewport_size.x - screen_margin * 2.0, 480.0, 1820.0)
+	var layout_height: float = clampf(viewport_size.y - 64.0, 420.0, 940.0)
+	var spacing: int = 16 if viewport_size.x >= 900.0 else 10
+	var top_height: float = clampf(viewport_size.y * 0.10, 68.0, 88.0)
+	var bottom_height := 56.0
+	var title_height := 34.0
+	var grid_gap: int = 8 if viewport_size.x >= 900.0 else 6
+	var inner_width: float = layout_width - float(content_margin_x * 2)
+	var columns: int = 4 if portrait_layout else (5 if viewport_size.x < 1500.0 else 6)
+	var card_width: float = floor((inner_width - float((columns - 1) * grid_gap)) / float(columns))
+	var card_height: float = clampf(card_width * CARD_ASPECT_RATIO, 226.0, 300.0)
+	var total_cards: int = _selected_character.specific_cards.size() if _selected_character != null else 20
+	var row_count: int = ceili(float(total_cards) / float(columns))
+	var max_grid_height: float = maxf(220.0, layout_height - top_height - title_height - bottom_height - float(spacing * 3))
+	var full_grid_height := card_height * float(row_count) + float((row_count - 1) * grid_gap)
+	var scroll_height: float = min(full_grid_height, max_grid_height)
+	var total_height: float = top_height + title_height + scroll_height + bottom_height + float(spacing * 3)
+	_apply_layout_values({
+		"mode_label": "desktop",
+		"layout_width": layout_width,
+		"layout_height": layout_height,
+		"inner_width": inner_width,
+		"total_height": total_height,
+		"content_margin_x": content_margin_x,
+		"content_margin_y": content_margin_y,
+		"panel_y": floor((viewport_size.y - total_height) * 0.5),
+		"spacing": spacing,
+		"top_height": top_height,
+		"bottom_height": bottom_height,
+		"title_font_size": 20 if viewport_size.x >= 900.0 else 17,
+		"selection_counter_width": 150.0,
+		"selection_counter_font": 18 if viewport_size.x >= 900.0 else 15,
+		"name_font_size": 24 if viewport_size.x >= 900.0 else 19,
+		"description_font_size": 15 if viewport_size.x >= 900.0 else 13,
+		"description_visible": true,
+		"portrait_size": 96.0,
+		"grid_gap": grid_gap,
+		"scroll_height": scroll_height,
+		"columns": columns,
+		"card_width": card_width,
+		"card_height": card_height,
+		"button_font_size": 16,
+		"bottom_alignment": BoxContainer.ALIGNMENT_CENTER,
+		"back_width_factor": 0.22,
+		"confirm_width_factor": 0.38,
+		"hide_scrollbars": false,
+	})
+
+
+func _apply_layout_values(config: Dictionary) -> void:
+	var layout_width: float = config["layout_width"]
+	var layout_height: float = config["layout_height"]
+	var inner_width: float = config["inner_width"]
+	var total_height: float = config["total_height"]
+	var content_margin_x: int = config["content_margin_x"]
+	var content_margin_y: int = config["content_margin_y"]
+	var spacing: int = config["spacing"]
+	var top_height: float = config["top_height"]
+	var bottom_height: float = config["bottom_height"]
+	var title_font_size: int = config["title_font_size"]
+	var selection_counter_width: float = config["selection_counter_width"]
+	var selection_counter_font: int = config["selection_counter_font"]
+	var name_font_size: int = config["name_font_size"]
+	var description_font_size: int = config["description_font_size"]
+	var description_visible: bool = config["description_visible"]
+	var portrait_size: float = config["portrait_size"]
+	var grid_gap: int = config["grid_gap"]
+	var scroll_height: float = config["scroll_height"]
+	var columns: int = config["columns"]
+	var card_width: float = config["card_width"]
+	var card_height: float = config["card_height"]
+	var button_font_size: int = config["button_font_size"]
+	var bottom_alignment: int = config["bottom_alignment"]
+	var back_width_factor: float = config["back_width_factor"]
+	var confirm_width_factor: float = config["confirm_width_factor"]
+	var hide_scrollbars: bool = config["hide_scrollbars"]
+
+	_content_margin.add_theme_constant_override("margin_left", content_margin_x)
+	_content_margin.add_theme_constant_override("margin_top", content_margin_y)
+	_content_margin.add_theme_constant_override("margin_right", content_margin_x)
+	_content_margin.add_theme_constant_override("margin_bottom", content_margin_y)
+	_content_panel.custom_minimum_size = Vector2(layout_width, total_height)
+	_content_panel.size = Vector2(layout_width, total_height)
+	_layout_box.custom_minimum_size = Vector2(inner_width, 0.0)
+	_layout_box.size = Vector2(inner_width, total_height - float(content_margin_y * 2))
+	_layout_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_layout_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_layout_box.add_theme_constant_override("separation", spacing)
+	_content_panel.position = Vector2(
+		floor((size.x - layout_width) * 0.5),
+		config["panel_y"]
+	)
+	_layout_box.position = Vector2.ZERO
+	_top_bar.custom_minimum_size = Vector2(inner_width, top_height)
+	_top_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_top_bar.add_theme_constant_override("separation", spacing)
+	_top_bar.alignment = BoxContainer.ALIGNMENT_CENTER
+	_title_label.add_theme_font_size_override("font_size", title_font_size)
+	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_selection_counter.custom_minimum_size = Vector2(selection_counter_width, 0.0)
+	_selection_counter.add_theme_font_size_override("font_size", selection_counter_font)
+	_character_name_card.add_theme_font_size_override("font_size", name_font_size)
+	_character_description_card.visible = description_visible
+	_character_description_card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_character_description_card.add_theme_font_size_override("font_size", description_font_size)
+	_character_portrait_card.custom_minimum_size = Vector2(portrait_size, portrait_size)
+	_character_portrait.custom_minimum_size = Vector2(portrait_size, portrait_size)
+	_tooltip.custom_minimum_size = Vector2(260.0 if _uses_touch_tooltip_mode() else 200.0, 0.0)
+	_card_grid.add_theme_constant_override("h_separation", grid_gap)
+	_card_grid.add_theme_constant_override("v_separation", grid_gap)
+	_scroll_container.custom_minimum_size = Vector2(inner_width, scroll_height)
+	_scroll_container.size = Vector2(inner_width, scroll_height)
+	_scroll_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_scroll_container.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_card_grid.columns = columns
+	_card_grid.custom_minimum_size = Vector2(inner_width, card_height * float(ceili(float(_selected_character.specific_cards.size() if _selected_character != null else 20) / float(columns))) + float((ceili(float(_selected_character.specific_cards.size() if _selected_character != null else 20) / float(columns)) - 1) * grid_gap))
+	_bottom_bar.custom_minimum_size = Vector2(inner_width, bottom_height)
+	_bottom_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_bottom_bar.alignment = bottom_alignment
+	_back_button.custom_minimum_size = Vector2(clampf(inner_width * back_width_factor, 110.0, 200.0), bottom_height)
+	_confirm_button.custom_minimum_size = Vector2(clampf(inner_width * confirm_width_factor, 170.0, 340.0), bottom_height)
+	_back_button.add_theme_font_size_override("font_size", button_font_size)
+	_confirm_button.add_theme_font_size_override("font_size", button_font_size)
+	_confirm_button.size_flags_horizontal = 0
+	_apply_mobile_scrollbar_visibility(hide_scrollbars)
+	_card_button_size = Vector2(card_width, card_height)
+	DebugLogger.log_system("CardSelectionScreen[%s]: viewport=%s layout=(%f,%f) inner=%f columns=%d card=(%f,%f) scroll_h=%f" % [config["mode_label"], size, layout_width, layout_height, inner_width, columns, card_width, card_height, scroll_height])
+
+
 func _hide_tooltip() -> void:
 	_tooltip.visible = false
 	_tooltip_anchor_button = null
@@ -232,69 +440,19 @@ func _reposition_tooltip() -> void:
 	_tooltip.position = pos
 
 
-func _apply_responsive_layout() -> void:
-	var viewport_size: Vector2 = get_viewport_rect().size
-	var compact_touch_ui := _uses_compact_mobile_layout()
-	var portrait_layout := viewport_size.y > viewport_size.x
-	var layout_width: float = clampf(viewport_size.x - (24.0 if compact_touch_ui else 96.0), 320.0, 1820.0)
-	var layout_height: float = clampf(viewport_size.y - (24.0 if compact_touch_ui else 64.0), 480.0 if compact_touch_ui else 420.0, 980.0 if compact_touch_ui else 940.0)
-	var spacing: int = 12 if compact_touch_ui else (16 if viewport_size.x >= 900.0 else 10)
-	var grid_gap: int = 10 if compact_touch_ui else (8 if viewport_size.x >= 900.0 else 6)
-	var top_height: float = clampf(viewport_size.y * (0.12 if compact_touch_ui else 0.10), 84.0 if compact_touch_ui else 68.0, 112.0 if compact_touch_ui else 88.0)
-	var bottom_height: float = 64.0 if compact_touch_ui else 56.0
-	var title_height: float = 40.0 if compact_touch_ui else 34.0
-	var max_grid_height: float = maxf(220.0, layout_height - top_height - title_height - bottom_height - float(spacing * 3))
-	var total_cards: int = _selected_character.specific_cards.size() if _selected_character != null else 20
-	var scroll_height: float = max_grid_height
-	var columns: int = 2 if portrait_layout else (4 if compact_touch_ui else (5 if viewport_size.x < 1500.0 else 6))
-	var width_limit: float = (layout_width - float((columns - 1) * grid_gap)) / float(columns)
-	var card_width: float = clampf(width_limit, 168.0 if portrait_layout else 176.0, 240.0 if portrait_layout else 220.0)
-	var card_height: float = clampf(card_width * (1.42 if compact_touch_ui else 1.34), 238.0 if portrait_layout else 226.0, 340.0 if portrait_layout else 300.0)
-	var row_count: int = ceili(float(total_cards) / float(columns))
-	var full_grid_height := card_height * float(row_count) + float((row_count - 1) * grid_gap)
-	scroll_height = min(full_grid_height, max_grid_height)
-	var total_height: float = top_height + title_height + scroll_height + bottom_height + float(spacing * 3)
-
-	_layout_box.custom_minimum_size = Vector2(layout_width, 0.0)
-	_layout_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_layout_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_layout_box.add_theme_constant_override("separation", spacing)
-	_content_panel.position = Vector2(
-		floor((viewport_size.x - layout_width) * 0.5),
-		floor((viewport_size.y - total_height) * 0.5)
-	)
-	_layout_box.position = Vector2(
-		0.0,
-		0.0
-	)
-	_top_bar.custom_minimum_size = Vector2(layout_width, top_height)
-	_top_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_top_bar.add_theme_constant_override("separation", spacing)
-	_top_bar.alignment = BoxContainer.ALIGNMENT_CENTER
-	_title_label.add_theme_font_size_override("font_size", 24 if compact_touch_ui else (20 if viewport_size.x >= 900.0 else 17))
-	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_selection_counter.add_theme_font_size_override("font_size", 20 if compact_touch_ui else (18 if viewport_size.x >= 900.0 else 15))
-	_character_name_card.add_theme_font_size_override("font_size", 28 if compact_touch_ui else (24 if viewport_size.x >= 900.0 else 19))
-	_character_description_card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_character_description_card.add_theme_font_size_override("font_size", 18 if compact_touch_ui else (15 if viewport_size.x >= 900.0 else 13))
-	_tooltip.custom_minimum_size = Vector2(260.0 if _uses_touch_tooltip_mode() else 200.0, 0.0)
-	_card_grid.add_theme_constant_override("h_separation", grid_gap)
-	_card_grid.add_theme_constant_override("v_separation", grid_gap)
-	_scroll_container.custom_minimum_size = Vector2(layout_width, scroll_height)
-	_scroll_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_scroll_container.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_card_grid.columns = columns
-	_card_grid.custom_minimum_size = Vector2(layout_width, full_grid_height)
-	_bottom_bar.custom_minimum_size = Vector2(layout_width, bottom_height)
-	_bottom_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_bottom_bar.alignment = BoxContainer.ALIGNMENT_CENTER
-	_back_button.custom_minimum_size = Vector2(clampf(layout_width * 0.20, 120.0, 180.0), bottom_height)
-	_confirm_button.custom_minimum_size = Vector2(clampf(layout_width * 0.36, 180.0, 320.0), bottom_height)
-	_back_button.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 16)
-	_confirm_button.add_theme_font_size_override("font_size", 18 if compact_touch_ui else 16)
-	_confirm_button.size_flags_horizontal = 0
-	_card_button_size = Vector2(card_width, card_height)
-	DebugLogger.log_system("CardSelectionScreen: viewport=%s layout=(%f,%f) columns=%d card=(%f,%f) grid_h=%f" % [viewport_size, layout_width, layout_height, columns, card_width, card_height, scroll_height])
+func _apply_mobile_scrollbar_visibility(hide_scrollbars: bool) -> void:
+	var horizontal_bar := _scroll_container.get_h_scroll_bar()
+	if horizontal_bar != null:
+		horizontal_bar.visible = not hide_scrollbars
+		horizontal_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		horizontal_bar.modulate = Color(1, 1, 1, 0.0 if hide_scrollbars else 1.0)
+		horizontal_bar.custom_minimum_size.y = 0.0 if hide_scrollbars else horizontal_bar.custom_minimum_size.y
+	var vertical_bar := _scroll_container.get_v_scroll_bar()
+	if vertical_bar != null:
+		vertical_bar.visible = not hide_scrollbars
+		vertical_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vertical_bar.modulate = Color(1, 1, 1, 0.0 if hide_scrollbars else 1.0)
+		vertical_bar.custom_minimum_size.x = 0.0 if hide_scrollbars else vertical_bar.custom_minimum_size.x
 
 func _update_character_info() -> void:
 	_character_name_card.text = _selected_character.name

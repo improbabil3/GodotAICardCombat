@@ -110,6 +110,11 @@ func _metodo_privato() -> void:
 - Usare `match` invece di catene `if/elif` per stati e enum.
 - `static func` per operazioni stateless sui dati (vedi `DeckManager`).
 
+### Regola responsive obbligatoria
+- Per qualunque schermata o componente responsive, separare sempre il layout **desktop** e il layout **mobile** in rami o funzioni distinte (`_apply_desktop_layout`, `_apply_mobile_layout`, ecc.).
+- Non mantenere formule miste desktop/mobile nello stesso blocco di layout: rende facile rompere un caso mentre si sistema l'altro.
+- Quando si corregge un problema visivo specifico a uno dei due ambienti, intervenire prima solo sul ramo interessato e verificare che l'altro resti invariato.
+
 ---
 
 ## Debug logging

@@ -50,3 +50,5 @@ __pycache__/
 android/*
 scenes/screens/*.tmp
 tools/configure_android.ps1
+*.txt
+Exec/*

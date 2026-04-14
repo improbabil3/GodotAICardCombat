@@ -5,10 +5,13 @@
 
 [node name="CharacterSelectionScreen" type="Control"]
 layout_mode = 1
+anchors_preset = 15
 anchors_left = 0.0
 anchors_top = 0.0
 anchors_right = 1.0
 anchors_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_w8xyd")
 
 [node name="Background" type="Control" parent="."]
@@ -27,12 +30,14 @@ anchors_top = 0.0
 anchors_right = 1.0
 anchors_bottom = 1.0
 
-[node name="ContentPanel" type="PanelContainer" parent="CenterContainer"]
+[node name="ContentPanel" type="Control" parent="CenterContainer"]
 layout_mode = 0
-theme_type_variation = &"ScreenPanel"
 
 [node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
@@ -63,13 +68,15 @@ layout_mode = 2
 custom_minimum_size = Vector2(140, 52)
 text = "< Precedente"
 
-[node name="CharacterPanel" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea"]
+[node name="CharacterPanel" type="Control" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea"]
 layout_mode = 2
 custom_minimum_size = Vector2(560, 500)
-theme_type_variation = &"PortraitPanel"
 
 [node name="CharacterInfo" type="VBoxContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/CarouselContainer/CarouselArea/CharacterPanel"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = -4.0

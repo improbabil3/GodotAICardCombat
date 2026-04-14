@@ -4,8 +4,12 @@
 [ext_resource type="Script" path="res://scripts/ui/sci_fi_backdrop.gd" id="2_backdrop"]
 
 [node name="CardSelectionScreen" type="Control" unique_id=317941348]
-layout_mode = 3
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_abc12")
 
 [node name="Background" type="Control" parent="." unique_id=2014594110]
@@ -23,12 +27,14 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="ContentPanel" type="PanelContainer" parent="CenterContainer" unique_id=564782499]
+[node name="ContentPanel" type="Control" parent="CenterContainer" unique_id=564782499]
 layout_mode = 0
-theme_type_variation = &"ScreenPanel"
 
 [node name="ContentMargin" type="MarginContainer" parent="CenterContainer/ContentPanel" unique_id=694350746]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
@@ -43,13 +49,15 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="CharacterPortraitCard" type="PanelContainer" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar" unique_id=308361967]
+[node name="CharacterPortraitCard" type="Control" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar" unique_id=308361967]
 custom_minimum_size = Vector2(116, 116)
 layout_mode = 2
-theme_type_variation = &"PortraitPanel"
 
 [node name="CharacterPortrait" type="TextureRect" parent="CenterContainer/ContentPanel/ContentMargin/VBoxContainer/TopBar/CharacterPortraitCard" unique_id=2081234763]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 expand_mode = 1
 stretch_mode = 5
 
