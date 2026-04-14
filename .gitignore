@@ -47,3 +47,6 @@ __pycache__/
 # Editor swap
 *.swp
 *~
+android/*
+scenes/screens/*.tmp
+tools/configure_android.ps1
